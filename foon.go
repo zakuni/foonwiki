@@ -1,13 +1,14 @@
 package main
 
 import (
-	"fmt"
+  "html/template"
 	"net/http"
 	"os"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "This is FoonWiki.")
+  t, _ :=  template.ParseFiles("index.html")
+  t.Execute(w, nil)
 }
 
 func main() {
