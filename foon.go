@@ -51,7 +51,6 @@ func initDb() *gorp.DbMap {
   checkErr(err, "sql.Open failed")
 
   dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
-
   dbmap.AddTableWithName(Page{}, "posts").SetKeys(true, "Id")
 
   err = dbmap.CreateTablesIfNotExists()
@@ -62,15 +61,15 @@ func initDb() *gorp.DbMap {
 
 func newPage(title, body string) Page {
   return Page{
-      Title: title,
-      Body:  body,
+    Title: title,
+    Body:  body,
   }
 }
 
 func checkErr(err error, msg string) {
-    if err != nil {
-        log.Fatalln(msg, err)
-    }
+  if err != nil {
+    log.Fatalln(msg, err)
+  }
 }
 
 func main() {
