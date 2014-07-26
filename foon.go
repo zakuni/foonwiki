@@ -10,6 +10,7 @@ import (
   "github.com/coopernurse/gorp"
   _ "github.com/lib/pq"
 )
+var dbmap *gorp.DbMap
 
 type Page struct {
   Id int64 `db:"post_id"`
@@ -22,14 +23,23 @@ func handler(w http.ResponseWriter, r *http.Request) {
   params := re.FindStringSubmatch(r.URL.Path)
   wiki := params[1]
   page := params[2]
-  if params[1] == "" {
+
+  if wiki == "" {
     t, _ :=  template.ParseFiles("index.html")
     t.Execute(w, nil)
-  } else if params[2] == "" {
+  } else if page == "" {
+    count, err := dbmap.SelectInt("select count(*) from posts")
+    checkErr(err, "select count(*) failed")
+    log.Println(count, "pages")
+
     p := &Page{Title: wiki, Body: ""}
     t, _ := template.ParseFiles("page.html")
     t.Execute(w, p)
   } else {
+    p1 := newPage(page, "")
+    err := dbmap.Insert(&p1)
+    checkErr(err, "Insert failed")
+
     p := &Page{Title: page, Body: ""}
     t, _ := template.ParseFiles("page.html")
     t.Execute(w, p)
@@ -64,16 +74,8 @@ func checkErr(err error, msg string) {
 }
 
 func main() {
-  dbmap := initDb()
+  dbmap = initDb()
   defer dbmap.Db.Close()
-
-  p1 := newPage("Hoge", "hogehoge-")
-  err := dbmap.Insert(&p1)
-  checkErr(err, "Insert failed")
-
-  count, err := dbmap.SelectInt("select count(*) from posts")
-  checkErr(err, "select count(*) failed")
-  log.Println(count, "pages")
 
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
