@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"strconv"
 
 	"github.com/coopernurse/gorp"
 	_ "github.com/lib/pq"
@@ -38,11 +39,21 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.ParseFiles("index.html")
 		t.Execute(w, nil)
 	} else if page == "" {
-		count, err := dbmap.SelectInt("select count(*) from posts")
-		checkErr(err, "select count(*) failed")
-		log.Println(count, "pages")
+		var wikiData Wiki
+		count, err := dbmap.SelectInt("select count(*) from wikis")
+		checkErr(err, "count failed")
+		err = dbmap.SelectOne(&wikiData, "select * from wikis where title = $1", wiki)
 
-		p := &Page{Title: wiki, Body: ""}
+		if wikiData.ID == 0 {
+			w1 := newWiki(wiki)
+			err = dbmap.Insert(&w1)
+			checkErr(err, "Insert failed")
+		}
+
+		count, err = dbmap.SelectInt("select count(*) from posts")
+		checkErr(err, "select count(*) failed")
+
+		p := &Page{Title: wiki, Body: strconv.FormatInt(count, 10)}
 		t, _ := template.ParseFiles("page.html")
 		t.Execute(w, p)
 	} else {
@@ -61,12 +72,19 @@ func initDb() *gorp.DbMap {
 	checkErr(err, "sql.Open failed")
 
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
-	dbmap.AddTableWithName(Page{}, "posts").SetKeys(true, "Id")
+	dbmap.AddTableWithName(Wiki{}, "wikis").SetKeys(true, "ID")
+	dbmap.AddTableWithName(Page{}, "posts").SetKeys(true, "ID")
 
 	err = dbmap.CreateTablesIfNotExists()
 	checkErr(err, "Create tables failed")
 
 	return dbmap
+}
+
+func newWiki(title string) Wiki {
+	return Wiki{
+		Title: title,
+	}
 }
 
 func newPage(title, body string) Page {
