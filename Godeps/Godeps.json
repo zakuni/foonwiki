@@ -1,5 +1,15 @@
 {
 	"ImportPath": "foon",
 	"GoVersion": "go1.3",
-	"Deps": []
+	"Deps": [
+		{
+			"ImportPath": "github.com/coopernurse/gorp",
+			"Comment": "v1.6.1",
+			"Rev": "31a7c02fabe8965c887cd243e381ce08328f3741"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Rev": "8a6a4529571d69ac3646a3c129e96ff81d40e5aa"
+		}
+	]
 }
