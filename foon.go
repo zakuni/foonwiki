@@ -14,16 +14,18 @@ import (
 
 var dbmap *gorp.DbMap
 
+// Wiki has many pages
 type Wiki struct {
-	Id    int64 `db:"wiki_id"`
+	ID    int64 `db:"wiki_id"`
 	Title string
 }
 
+// Page is the main content of wiki
 type Page struct {
-	Id     int64 `db:"post_id"`
+	ID     int64 `db:"post_id"`
 	Title  string
 	Body   string
-	WikiId int64
+	WikiID int64
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
