@@ -50,6 +50,13 @@ func initDb() *gorp.DbMap {
   return dbmap
 }
 
+func newPage(title, body string) Page {
+  return Page{
+      Title: title,
+      Body:  body,
+  }
+}
+
 func checkErr(err error, msg string) {
     if err != nil {
         log.Fatalln(msg, err)
@@ -59,6 +66,14 @@ func checkErr(err error, msg string) {
 func main() {
   dbmap := initDb()
   defer dbmap.Db.Close()
+
+  p1 := newPage("Hoge", "hogehoge-")
+  err := dbmap.Insert(&p1)
+  checkErr(err, "Insert failed")
+
+  count, err := dbmap.SelectInt("select count(*) from posts")
+  checkErr(err, "select count(*) failed")
+  log.Println(count, "pages")
 
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
