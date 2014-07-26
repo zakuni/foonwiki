@@ -1,13 +1,18 @@
 package main
 
 import (
+  "database/sql"
   "html/template"
+  "log"
 	"net/http"
 	"os"
   "regexp"
+  "github.com/coopernurse/gorp"
+  _ "github.com/lib/pq"
 )
 
 type Page struct {
+  Id int64 `db:"post_id"`
   Title string
   Body string
 }
@@ -31,7 +36,30 @@ func handler(w http.ResponseWriter, r *http.Request) {
   }
 }
 
+func initDb() *gorp.DbMap {
+  db, err := sql.Open("postgres", "user=zakuni dbname=foon sslmode=disable")
+  checkErr(err, "sql.Open failed")
+
+  dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
+
+  dbmap.AddTableWithName(Page{}, "posts").SetKeys(true, "Id")
+
+  err = dbmap.CreateTablesIfNotExists()
+  checkErr(err, "Create tables failed")
+
+  return dbmap
+}
+
+func checkErr(err error, msg string) {
+    if err != nil {
+        log.Fatalln(msg, err)
+    }
+}
+
 func main() {
+  dbmap := initDb()
+  defer dbmap.Db.Close()
+
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
