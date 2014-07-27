@@ -23,7 +23,7 @@ type Wiki struct {
 
 // Page is the main content of wiki
 type Page struct {
-	ID     int64 `db:"post_id"`
+	ID     int64 `db:"page_id"`
 	Title  string
 	Body   string
 	WikiID int64
@@ -42,23 +42,38 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		var wikiData Wiki
 		count, err := dbmap.SelectInt("select count(*) from wikis")
 		checkErr(err, "count failed")
-		err = dbmap.SelectOne(&wikiData, "select * from wikis where title = $1", wiki)
 
+		err = dbmap.SelectOne(&wikiData, "select * from wikis where title = $1", wiki)
+		if err != nil {
+			log.Println(err)
+		}
 		if wikiData.ID == 0 {
-			w1 := newWiki(wiki)
-			err = dbmap.Insert(&w1)
+			wikiData := newWiki(wiki)
+			err = dbmap.Insert(&wikiData)
 			checkErr(err, "Insert failed")
 		}
 
-		count, err = dbmap.SelectInt("select count(*) from posts")
+		count, err = dbmap.SelectInt("select count(*) from pages")
 		checkErr(err, "select count(*) failed")
 
 		p := &Page{Title: wiki, Body: strconv.FormatInt(count, 10)}
 		t, _ := template.ParseFiles("page.html")
 		t.Execute(w, p)
 	} else {
-		p1 := newPage(page, "")
-		err := dbmap.Insert(&p1)
+		var wikiData Wiki
+		err := dbmap.SelectOne(&wikiData, "select * from wikis where title = $1", wiki)
+		if err != nil {
+			log.Println(err)
+		}
+
+		if wikiData.ID == 0 {
+			wikiData = newWiki(wiki)
+			err = dbmap.Insert(&wikiData)
+			checkErr(err, "Insert failed")
+		}
+
+		p1 := newPage(page, "", wikiData.ID)
+		err = dbmap.Insert(&p1)
 		checkErr(err, "Insert failed")
 
 		p := &Page{Title: page, Body: ""}
@@ -72,8 +87,11 @@ func initDb() *gorp.DbMap {
 	checkErr(err, "sql.Open failed")
 
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
-	dbmap.AddTableWithName(Wiki{}, "wikis").SetKeys(true, "ID")
-	dbmap.AddTableWithName(Page{}, "posts").SetKeys(true, "ID")
+	wikistable := dbmap.AddTableWithName(Wiki{}, "wikis").SetKeys(true, "ID")
+	wikistable.ColMap("Title").SetUnique(true).SetNotNull(true)
+
+	pagestable := dbmap.AddTableWithName(Page{}, "pages").SetKeys(true, "ID")
+	pagestable.ColMap("Title").SetNotNull(true)
 
 	err = dbmap.CreateTablesIfNotExists()
 	checkErr(err, "Create tables failed")
@@ -87,10 +105,11 @@ func newWiki(title string) Wiki {
 	}
 }
 
-func newPage(title, body string) Page {
+func newPage(title, body string, wikiid int64) Page {
 	return Page{
-		Title: title,
-		Body:  body,
+		Title:  title,
+		Body:   body,
+		WikiID: wikiid,
 	}
 }
 
