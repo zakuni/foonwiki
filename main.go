@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"regexp"
-	"strconv"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
@@ -30,11 +29,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		db.Table("wikis").Count(&count)
 		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
 		var pages []models.Page
-		db.Where("id = ?", wiki.Id).Find(&pages)
-		log.Println(pages)
-		p := &models.Page{Name: wikiName, Content: strconv.FormatInt(count, 10)}
-		t, _ := template.ParseFiles("page.html")
-		t.Execute(w, p)
+		db.Where("wiki_id = ?", wiki.Id).Find(&pages)
+		wiki.Pages = pages
+		t, _ := template.ParseFiles("wiki.html")
+		t.Execute(w, wiki)
 	} else {
 		var wiki models.Wiki
 		var page models.Page
