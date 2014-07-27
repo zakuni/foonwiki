@@ -2,13 +2,15 @@ package models
 
 // Wiki has many pages
 type Wiki struct {
-	ID    int64 `db:"wiki_id"`
-	Title string
+	Id   int64
+	Name string `sql:"not null;unique"`
+
+	Pages []Page
 }
 
 // NewWiki creates new Wiki
-func NewWiki(title string) Wiki {
+func NewWiki(name string) Wiki {
 	return Wiki{
-		Title: title,
+		Name: name,
 	}
 }

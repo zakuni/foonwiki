@@ -2,17 +2,17 @@ package models
 
 // Page is the main content of wiki
 type Page struct {
-	ID     int64 `db:"page_id"`
-	Title  string
+	Id     int64
+	Name   string
 	Body   string
-	WikiID int64
+	WikiId int64
 }
 
 // NewPage creates new Page
-func NewPage(title, body string, wikiid int64) Page {
+func NewPage(name, body string, wikiid int64) Page {
 	return Page{
-		Title:  title,
+		Name:   name,
 		Body:   body,
-		WikiID: wikiid,
+		WikiId: wikiid,
 	}
 }

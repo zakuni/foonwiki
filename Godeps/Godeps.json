@@ -3,9 +3,8 @@
 	"GoVersion": "go1.3",
 	"Deps": [
 		{
-			"ImportPath": "github.com/coopernurse/gorp",
-			"Comment": "v1.6.1",
-			"Rev": "31a7c02fabe8965c887cd243e381ce08328f3741"
+			"ImportPath": "github.com/jinzhu/gorm",
+			"Rev": "6a00344355577859ce7f7b533dc62526992dfeeb"
 		},
 		{
 			"ImportPath": "github.com/lib/pq",

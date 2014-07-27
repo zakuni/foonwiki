@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"html/template"
 	"log"
 	"net/http"
@@ -9,82 +8,50 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/coopernurse/gorp"
+	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
-
 	"github.com/zakuni/foon/models"
 )
 
-var dbmap *gorp.DbMap
+var db gorm.DB
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	re := regexp.MustCompile("^/([^/]*)/?([^/]*)$")
 	params := re.FindStringSubmatch(r.URL.Path)
-	wiki := params[1]
-	page := params[2]
+	wikiName := params[1]
+	pageName := params[2]
 
-	if wiki == "" {
+	if wikiName == "" {
 		t, _ := template.ParseFiles("index.html")
 		t.Execute(w, nil)
-	} else if page == "" {
-		var wikiData models.Wiki
-		count, err := dbmap.SelectInt("select count(*) from wikis")
-		checkErr(err, "count failed")
-
-		err = dbmap.SelectOne(&wikiData, "select * from wikis where title = $1", wiki)
-		if err != nil {
-			log.Println(err)
-		}
-		if wikiData.ID == 0 {
-			wikiData := models.NewWiki(wiki)
-			err = dbmap.Insert(&wikiData)
-			checkErr(err, "Insert failed")
-		}
-
-		count, err = dbmap.SelectInt("select count(*) from pages")
-		checkErr(err, "select count(*) failed")
-
-		p := &models.Page{Title: wiki, Body: strconv.FormatInt(count, 10)}
+	} else if pageName == "" {
+		var wiki models.Wiki
+		var count int64
+		db.Table("wikis").Count(&count)
+		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
+		p := &models.Page{Name: wikiName, Body: strconv.FormatInt(count, 10)}
 		t, _ := template.ParseFiles("page.html")
 		t.Execute(w, p)
 	} else {
-		var wikiData models.Wiki
-		err := dbmap.SelectOne(&wikiData, "select * from wikis where title = $1", wiki)
-		if err != nil {
-			log.Println(err)
-		}
-
-		if wikiData.ID == 0 {
-			wikiData = models.NewWiki(wiki)
-			err = dbmap.Insert(&wikiData)
-			checkErr(err, "Insert failed")
-		}
-
-		p1 := models.NewPage(page, "", wikiData.ID)
-		err = dbmap.Insert(&p1)
-		checkErr(err, "Insert failed")
-
-		p := &models.Page{Title: page, Body: ""}
+		var wiki models.Wiki
+		var page models.Page
+		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
+		db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
+		page = models.Page{Name: pageName, Body: ""}
 		t, _ := template.ParseFiles("page.html")
-		t.Execute(w, p)
+		t.Execute(w, page)
 	}
 }
 
-func initDb() *gorp.DbMap {
-	db, err := sql.Open("postgres", "user=zakuni dbname=foon sslmode=disable")
+func initDb() gorm.DB {
+	db, err := gorm.Open("postgres", "user=zakuni dbname=foon sslmode=disable")
 	checkErr(err, "sql.Open failed")
+	db.DB()
 
-	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
-	wikistable := dbmap.AddTableWithName(models.Wiki{}, "wikis").SetKeys(true, "ID")
-	wikistable.ColMap("Title").SetUnique(true).SetNotNull(true)
+	db.AutoMigrate(models.Wiki{})
+	db.AutoMigrate(models.Page{})
 
-	pagestable := dbmap.AddTableWithName(models.Page{}, "pages").SetKeys(true, "ID")
-	pagestable.ColMap("Title").SetNotNull(true)
-
-	err = dbmap.CreateTablesIfNotExists()
-	checkErr(err, "Create tables failed")
-
-	return dbmap
+	return db
 }
 
 func checkErr(err error, msg string) {
@@ -94,8 +61,8 @@ func checkErr(err error, msg string) {
 }
 
 func main() {
-	dbmap = initDb()
-	defer dbmap.Db.Close()
+	db = initDb()
+	defer db.Close()
 
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
