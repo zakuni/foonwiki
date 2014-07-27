@@ -25,20 +25,22 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, nil)
 	} else if pageName == "" {
 		var wiki models.Wiki
-		var count int64
-		db.Table("wikis").Count(&count)
-		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
 		var pages []models.Page
-		db.Where("wiki_id = ?", wiki.Id).Find(&pages)
+
+		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
+		db.Model(&wiki).Related(&pages)
 		wiki.Pages = pages
+
 		t, _ := template.ParseFiles("wiki.html")
 		t.Execute(w, wiki)
 	} else {
 		var wiki models.Wiki
 		var page models.Page
+
 		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
 		db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
 		page = models.Page{Name: pageName, Content: ""}
+
 		t, _ := template.ParseFiles("page.html")
 		t.Execute(w, page)
 	}
