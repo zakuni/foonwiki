@@ -12,7 +12,7 @@ import (
 	"github.com/coopernurse/gorp"
 	_ "github.com/lib/pq"
 
-	"foon/models"
+	"github.com/zakuni/foon/models"
 )
 
 var dbmap *gorp.DbMap

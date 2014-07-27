@@ -1,9 +1,6 @@
 {
-	"ImportPath": "foon",
+	"ImportPath": "github.com/zakuni/foon",
 	"GoVersion": "go1.3",
-	"Packages": [
-		"./..."
-	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/coopernurse/gorp",
