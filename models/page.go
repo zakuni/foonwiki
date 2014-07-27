@@ -7,3 +7,12 @@ type Page struct {
 	Body   string
 	WikiID int64
 }
+
+// NewPage creates new Page
+func NewPage(title, body string, wikiid int64) Page {
+	return Page{
+		Title:  title,
+		Body:   body,
+		WikiID: wikiid,
+	}
+}

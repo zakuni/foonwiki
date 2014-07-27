@@ -35,7 +35,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 		}
 		if wikiData.ID == 0 {
-			wikiData := newWiki(wiki)
+			wikiData := models.NewWiki(wiki)
 			err = dbmap.Insert(&wikiData)
 			checkErr(err, "Insert failed")
 		}
@@ -54,12 +54,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if wikiData.ID == 0 {
-			wikiData = newWiki(wiki)
+			wikiData = models.NewWiki(wiki)
 			err = dbmap.Insert(&wikiData)
 			checkErr(err, "Insert failed")
 		}
 
-		p1 := newPage(page, "", wikiData.ID)
+		p1 := models.NewPage(page, "", wikiData.ID)
 		err = dbmap.Insert(&p1)
 		checkErr(err, "Insert failed")
 
@@ -84,20 +84,6 @@ func initDb() *gorp.DbMap {
 	checkErr(err, "Create tables failed")
 
 	return dbmap
-}
-
-func newWiki(title string) models.Wiki {
-	return models.Wiki{
-		Title: title,
-	}
-}
-
-func newPage(title, body string, wikiid int64) models.Page {
-	return models.Page{
-		Title:  title,
-		Body:   body,
-		WikiID: wikiid,
-	}
 }
 
 func checkErr(err error, msg string) {
