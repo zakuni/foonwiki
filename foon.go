@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"foon/models"
 	"html/template"
 	"log"
 	"net/http"
@@ -15,20 +16,6 @@ import (
 
 var dbmap *gorp.DbMap
 
-// Wiki has many pages
-type Wiki struct {
-	ID    int64 `db:"wiki_id"`
-	Title string
-}
-
-// Page is the main content of wiki
-type Page struct {
-	ID     int64 `db:"page_id"`
-	Title  string
-	Body   string
-	WikiID int64
-}
-
 func handler(w http.ResponseWriter, r *http.Request) {
 	re := regexp.MustCompile("^/([^/]*)/?([^/]*)$")
 	params := re.FindStringSubmatch(r.URL.Path)
@@ -39,7 +26,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.ParseFiles("index.html")
 		t.Execute(w, nil)
 	} else if page == "" {
-		var wikiData Wiki
+		var wikiData models.Wiki
 		count, err := dbmap.SelectInt("select count(*) from wikis")
 		checkErr(err, "count failed")
 
@@ -56,11 +43,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		count, err = dbmap.SelectInt("select count(*) from pages")
 		checkErr(err, "select count(*) failed")
 
-		p := &Page{Title: wiki, Body: strconv.FormatInt(count, 10)}
+		p := &models.Page{Title: wiki, Body: strconv.FormatInt(count, 10)}
 		t, _ := template.ParseFiles("page.html")
 		t.Execute(w, p)
 	} else {
-		var wikiData Wiki
+		var wikiData models.Wiki
 		err := dbmap.SelectOne(&wikiData, "select * from wikis where title = $1", wiki)
 		if err != nil {
 			log.Println(err)
@@ -76,7 +63,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		err = dbmap.Insert(&p1)
 		checkErr(err, "Insert failed")
 
-		p := &Page{Title: page, Body: ""}
+		p := &models.Page{Title: page, Body: ""}
 		t, _ := template.ParseFiles("page.html")
 		t.Execute(w, p)
 	}
@@ -87,10 +74,10 @@ func initDb() *gorp.DbMap {
 	checkErr(err, "sql.Open failed")
 
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
-	wikistable := dbmap.AddTableWithName(Wiki{}, "wikis").SetKeys(true, "ID")
+	wikistable := dbmap.AddTableWithName(models.Wiki{}, "wikis").SetKeys(true, "ID")
 	wikistable.ColMap("Title").SetUnique(true).SetNotNull(true)
 
-	pagestable := dbmap.AddTableWithName(Page{}, "pages").SetKeys(true, "ID")
+	pagestable := dbmap.AddTableWithName(models.Page{}, "pages").SetKeys(true, "ID")
 	pagestable.ColMap("Title").SetNotNull(true)
 
 	err = dbmap.CreateTablesIfNotExists()
@@ -99,14 +86,14 @@ func initDb() *gorp.DbMap {
 	return dbmap
 }
 
-func newWiki(title string) Wiki {
-	return Wiki{
+func newWiki(title string) models.Wiki {
+	return models.Wiki{
 		Title: title,
 	}
 }
 
-func newPage(title, body string, wikiid int64) Page {
-	return Page{
+func newPage(title, body string, wikiid int64) models.Page {
+	return models.Page{
 		Title:  title,
 		Body:   body,
 		WikiID: wikiid,
