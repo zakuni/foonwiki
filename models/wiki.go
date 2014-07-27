@@ -7,10 +7,3 @@ type Wiki struct {
 
 	Pages []Page
 }
-
-// NewWiki creates new Wiki
-func NewWiki(name string) Wiki {
-	return Wiki{
-		Name: name,
-	}
-}

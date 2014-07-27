@@ -29,7 +29,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		var count int64
 		db.Table("wikis").Count(&count)
 		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
-		p := &models.Page{Name: wikiName, Body: strconv.FormatInt(count, 10)}
+		var pages []models.Page
+		db.Where("id = ?", wiki.Id).Find(&pages)
+		log.Println(pages)
+		p := &models.Page{Name: wikiName, Content: strconv.FormatInt(count, 10)}
 		t, _ := template.ParseFiles("page.html")
 		t.Execute(w, p)
 	} else {
@@ -37,7 +40,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		var page models.Page
 		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
 		db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
-		page = models.Page{Name: pageName, Body: ""}
+		page = models.Page{Name: pageName, Content: ""}
 		t, _ := template.ParseFiles("page.html")
 		t.Execute(w, page)
 	}
