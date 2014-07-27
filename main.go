@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"foon/models"
 	"html/template"
 	"log"
 	"net/http"
@@ -12,6 +11,8 @@ import (
 
 	"github.com/coopernurse/gorp"
 	_ "github.com/lib/pq"
+
+	"foon/models"
 )
 
 var dbmap *gorp.DbMap
