@@ -3,6 +3,10 @@
 	"GoVersion": "go1.3",
 	"Deps": [
 		{
+			"ImportPath": "github.com/golang/glog",
+			"Rev": "d1c4472bf2efd3826f2b5bdcc02d8416798d678c"
+		},
+		{
 			"ImportPath": "github.com/jinzhu/gorm",
 			"Rev": "6a00344355577859ce7f7b533dc62526992dfeeb"
 		},

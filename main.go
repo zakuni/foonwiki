@@ -1,12 +1,13 @@
 package main
 
 import (
+	"flag"
 	"html/template"
-	"log"
 	"net/http"
 	"os"
 	"regexp"
 
+	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 	"github.com/zakuni/foon/models"
@@ -59,11 +60,14 @@ func initDb() gorm.DB {
 
 func checkErr(err error, msg string) {
 	if err != nil {
-		log.Fatalln(msg, err)
+		glog.Fatalln(msg, err)
 	}
 }
 
 func main() {
+	// necessary for glog
+	flag.Parse()
+
 	db = initDb()
 	defer db.Close()
 
