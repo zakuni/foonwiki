@@ -71,6 +71,7 @@ func main() {
 	db = initDb()
 	defer db.Close()
 
+	glog.Infoln("start listening at port", os.Getenv("PORT"))
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
