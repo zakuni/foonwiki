@@ -16,6 +16,7 @@ import (
 var db gorm.DB
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	glog.Info(r.URL.Path)
 	re := regexp.MustCompile("^/([^/]*)/?([^/]*)$")
 	params := re.FindStringSubmatch(r.URL.Path)
 	wikiName := params[1]
