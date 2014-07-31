@@ -43,7 +43,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 			db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
 			db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
-			page = models.Page{Name: pageName, Content: ""}
 
 			t, _ := template.ParseFiles("page.html")
 			t.Execute(w, page)
@@ -68,7 +67,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 			db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
 			db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
-			page = models.Page{Name: pageName, Content: ""}
+			page.Content = r.FormValue("content")
+			db.Save(&page)
 
 			t, _ := template.ParseFiles("page.html")
 			t.Execute(w, page)
