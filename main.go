@@ -48,20 +48,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			t.Execute(w, page)
 		}
 	case "POST":
-		if wikiName == "" {
-			t, _ := template.ParseFiles("index.html")
-			t.Execute(w, nil)
-		} else if pageName == "" {
-			var wiki models.Wiki
-			var pages []models.Page
-
-			db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
-			db.Model(&wiki).Related(&pages)
-			wiki.Pages = pages
-
-			t, _ := template.ParseFiles("wiki.html")
-			t.Execute(w, wiki)
-		} else {
+		if wikiName != "" && pageName != "" {
 			var wiki models.Wiki
 			var page models.Page
 
@@ -72,6 +59,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 			t, _ := template.ParseFiles("page.html")
 			t.Execute(w, page)
+		} else {
+			http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 		}
 	}
 }
