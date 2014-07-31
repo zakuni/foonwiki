@@ -16,35 +16,63 @@ import (
 var db gorm.DB
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	glog.Info(r.URL.Path)
+	glog.Info(r.Method, " ", r.URL.Path)
 	re := regexp.MustCompile("^/([^/]*)/?([^/]*)$")
 	params := re.FindStringSubmatch(r.URL.Path)
 	wikiName := params[1]
 	pageName := params[2]
 
-	if wikiName == "" {
-		t, _ := template.ParseFiles("index.html")
-		t.Execute(w, nil)
-	} else if pageName == "" {
-		var wiki models.Wiki
-		var pages []models.Page
+	switch r.Method {
+	case "GET":
+		if wikiName == "" {
+			t, _ := template.ParseFiles("index.html")
+			t.Execute(w, nil)
+		} else if pageName == "" {
+			var wiki models.Wiki
+			var pages []models.Page
 
-		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
-		db.Model(&wiki).Related(&pages)
-		wiki.Pages = pages
+			db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
+			db.Model(&wiki).Related(&pages)
+			wiki.Pages = pages
 
-		t, _ := template.ParseFiles("wiki.html")
-		t.Execute(w, wiki)
-	} else {
-		var wiki models.Wiki
-		var page models.Page
+			t, _ := template.ParseFiles("wiki.html")
+			t.Execute(w, wiki)
+		} else {
+			var wiki models.Wiki
+			var page models.Page
 
-		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
-		db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
-		page = models.Page{Name: pageName, Content: ""}
+			db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
+			db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
+			page = models.Page{Name: pageName, Content: ""}
 
-		t, _ := template.ParseFiles("page.html")
-		t.Execute(w, page)
+			t, _ := template.ParseFiles("page.html")
+			t.Execute(w, page)
+		}
+	case "POST":
+		if wikiName == "" {
+			t, _ := template.ParseFiles("index.html")
+			t.Execute(w, nil)
+		} else if pageName == "" {
+			var wiki models.Wiki
+			var pages []models.Page
+
+			db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
+			db.Model(&wiki).Related(&pages)
+			wiki.Pages = pages
+
+			t, _ := template.ParseFiles("wiki.html")
+			t.Execute(w, wiki)
+		} else {
+			var wiki models.Wiki
+			var page models.Page
+
+			db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
+			db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
+			page = models.Page{Name: pageName, Content: ""}
+
+			t, _ := template.ParseFiles("page.html")
+			t.Execute(w, page)
+		}
 	}
 }
 
