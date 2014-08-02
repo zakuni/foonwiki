@@ -50,7 +50,7 @@ func main() {
 		var pages []models.Page
 		wikiName := params["wiki"]
 
-		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
+		db.FirstOrInit(&wiki, models.Wiki{Name: wikiName})
 		db.Model(&wiki).Related(&pages)
 		wiki.Pages = pages
 
@@ -64,8 +64,12 @@ func main() {
 		wikiName := params["wiki"]
 		pageName := params["page"]
 
-		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
-		db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
+		db.FirstOrInit(&wiki, models.Wiki{Name: wikiName})
+		if !db.NewRecord(wiki) {
+			db.FirstOrInit(&page, models.Page{Name: pageName, WikiId: wiki.Id})
+		} else {
+			page.Name = pageName
+		}
 
 		t, _ := template.ParseFiles("page.html")
 		t.Execute(w, page)
