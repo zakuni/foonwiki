@@ -50,7 +50,7 @@ func main() {
 		var pages []models.Page
 		wikiName := params["wiki"]
 
-		db.FirstOrInit(&wiki, models.Wiki{Name: wikiName})
+		db.Where(models.Wiki{Name: wikiName}).FirstOrInit(&wiki)
 		db.Model(&wiki).Related(&pages)
 		wiki.Pages = pages
 
