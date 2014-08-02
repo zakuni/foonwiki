@@ -64,9 +64,9 @@ func main() {
 		wikiName := params["wiki"]
 		pageName := params["page"]
 
-		db.FirstOrInit(&wiki, models.Wiki{Name: wikiName})
+		db.Where(models.Wiki{Name: wikiName}).FirstOrInit(&wiki)
 		if !db.NewRecord(wiki) {
-			db.FirstOrInit(&page, models.Page{Name: pageName, WikiId: wiki.Id})
+			db.Where(models.Page{Name: pageName, WikiId: wiki.Id}).FirstOrInit(&page)
 		} else {
 			page.Name = pageName
 		}
