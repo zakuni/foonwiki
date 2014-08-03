@@ -40,12 +40,12 @@ func main() {
 
 	m := martini.Classic()
 
-	m.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	m.Get("/", func(w http.ResponseWriter) {
 		t, _ := template.ParseFiles("index.html")
 		t.Execute(w, nil)
 	})
 
-	m.Get("/:wiki", func(w http.ResponseWriter, r *http.Request, params martini.Params) {
+	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params) {
 		var wiki models.Wiki
 		var pages []models.Page
 		wikiName := params["wiki"]
@@ -58,7 +58,7 @@ func main() {
 		t.Execute(w, wiki)
 	})
 
-	m.Get("/:wiki/:page", func(w http.ResponseWriter, r *http.Request, params martini.Params) {
+	m.Get("/:wiki/:page", func(w http.ResponseWriter, params martini.Params) {
 		var wiki models.Wiki
 		var page models.Page
 		wikiName := params["wiki"]
