@@ -43,14 +43,8 @@ func main() {
 		Layout: "layout",
 	}))
 
-	s := struct {
-		Title string
-	} {
-		"FoonWiki",
-	}
-
 	m.Get("/", func(r render.Render) {
-		r.HTML(200, "index", s)
+		r.HTML(200, "index", nil)
 	})
 
 	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params, r render.Render) {
@@ -66,7 +60,7 @@ func main() {
 			Title string
 			Wiki models.Wiki
 		} {
-			wikiName+" - FoonWiki",
+			wikiName,
 			wiki,
 		}
 		r.HTML(200, "wiki", s)
@@ -90,7 +84,7 @@ func main() {
 			WikiName string
 			Page models.Page
 		} {
-			wikiName+"/"+pageName+" - FoonWiki",
+			wikiName+"/"+pageName,
 			wikiName,
 			page,
 		}
@@ -113,7 +107,7 @@ func main() {
 			WikiName string
 			Page models.Page
 		} {
-			wikiName+"/"+pageName+" - FoonWiki",
+			wikiName+"/"+pageName,
 			wikiName,
 			page,
 		}
