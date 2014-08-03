@@ -1,6 +1,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{.Title}}</title>
   <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/foundation.css">
   <script src="/js/vendor/modernizr.js"></script>
@@ -8,9 +9,9 @@
 <body>
   <div class="row">
     <div class="small-12 column">
-      <h1>{{.Name}}</h1>
-      <p>{{.Content}}</p>
-      <form action="{{.Name}}" method="POST">
+      <h1>{{.Page.Name}}</h1>
+      <p>{{.Page.Content}}</p>
+      <form action="{{.Page.Name}}" method="POST">
         <textarea name="content"></textarea>
         <br>
         <input type="submit" value="save">

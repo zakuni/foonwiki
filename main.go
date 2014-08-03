@@ -43,8 +43,14 @@ func main() {
 		Layout: "layout",
 	}))
 
+	s := struct {
+		Title string
+	} {
+		"FoonWiki",
+	}
+
 	m.Get("/", func(r render.Render) {
-		r.HTML(200, "index", nil)
+		r.HTML(200, "index", s)
 	})
 
 	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params, r render.Render) {
@@ -56,7 +62,14 @@ func main() {
 		db.Model(&wiki).Related(&pages)
 		wiki.Pages = pages
 
-		r.HTML(200, "wiki", wiki)
+		s := struct {
+			Title string
+			Wiki models.Wiki
+		} {
+			wikiName+" - FoonWiki",
+			wiki,
+		}
+		r.HTML(200, "wiki", s)
 	})
 
 	m.Get("/:wiki/:page", func(w http.ResponseWriter, params martini.Params, r render.Render) {
@@ -72,7 +85,16 @@ func main() {
 			page.Name = pageName
 		}
 
-		r.HTML(200, "page", page)
+		s := struct {
+			Title string
+			WikiName string
+			Page models.Page
+		} {
+			wikiName+"/"+pageName+" - FoonWiki",
+			wikiName,
+			page,
+		}
+		r.HTML(200, "page", s)
 	})
 
 	m.Post("/:wiki/:page", func(w http.ResponseWriter, req *http.Request, params martini.Params, r render.Render) {
@@ -86,7 +108,16 @@ func main() {
 		page.Content = req.FormValue("content")
 		db.Save(&page)
 
-		r.HTML(200, "page", page)
+		s := struct {
+			Title string
+			WikiName string
+			Page models.Page
+		} {
+			wikiName+"/"+pageName+" - FoonWiki",
+			wikiName,
+			page,
+		}
+		r.HTML(200, "page", s)
 	})
 
 	m.Run()
