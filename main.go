@@ -2,13 +2,13 @@ package main
 
 import (
 	"flag"
-	"html/template"
 	"net/http"
 
 	"github.com/go-martini/martini"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
+	"github.com/martini-contrib/render"
 	"github.com/zakuni/foon/models"
 )
 
@@ -39,13 +39,13 @@ func main() {
 	defer db.Close()
 
 	m := martini.Classic()
+	m.Use(render.Renderer())
 
-	m.Get("/", func(w http.ResponseWriter) {
-		t, _ := template.ParseFiles("index.html")
-		t.Execute(w, nil)
+	m.Get("/", func(r render.Render) {
+		r.HTML(200, "index", nil)
 	})
 
-	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params) {
+	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var pages []models.Page
 		wikiName := params["wiki"]
@@ -54,11 +54,10 @@ func main() {
 		db.Model(&wiki).Related(&pages)
 		wiki.Pages = pages
 
-		t, _ := template.ParseFiles("wiki.html")
-		t.Execute(w, wiki)
+		r.HTML(200, "wiki", wiki)
 	})
 
-	m.Get("/:wiki/:page", func(w http.ResponseWriter, params martini.Params) {
+	m.Get("/:wiki/:page", func(w http.ResponseWriter, params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var page models.Page
 		wikiName := params["wiki"]
@@ -71,11 +70,10 @@ func main() {
 			page.Name = pageName
 		}
 
-		t, _ := template.ParseFiles("page.html")
-		t.Execute(w, page)
+		r.HTML(200, "page", page)
 	})
 
-	m.Post("/:wiki/:page", func(w http.ResponseWriter, r *http.Request, params martini.Params) {
+	m.Post("/:wiki/:page", func(w http.ResponseWriter, req *http.Request, params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var page models.Page
 		wikiName := params["wiki"]
@@ -83,11 +81,10 @@ func main() {
 
 		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
 		db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
-		page.Content = r.FormValue("content")
+		page.Content = req.FormValue("content")
 		db.Save(&page)
 
-		t, _ := template.ParseFiles("page.html")
-		t.Execute(w, page)
+		r.HTML(200, "page", page)
 	})
 
 	m.Run()

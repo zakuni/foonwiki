@@ -23,6 +23,14 @@
 		{
 			"ImportPath": "github.com/lib/pq",
 			"Rev": "8a6a4529571d69ac3646a3c129e96ff81d40e5aa"
+		},
+		{
+			"ImportPath": "github.com/martini-contrib/render",
+			"Rev": "b65063311fac6cbf84d3538f5715f7847e648322"
+		},
+		{
+			"ImportPath": "github.com/oxtoacart/bpool",
+			"Rev": "0f78ff9152c03745d1a47c9023af1b424e202c07"
 		}
 	]
 }
