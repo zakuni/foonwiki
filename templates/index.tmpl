@@ -3,3 +3,22 @@
     <h1>This is FoonWiki</h1>
   </div>
 </div>
+<div class="row">
+  <div class="large-4 columns">
+    <form id="towiki" onSubmit="gotoWiki(); return false;">
+      <div class="row collapse">
+        <div class="small-10 columns">
+          <input type="text" name="wikiname" placeholder="Name of Wiki">
+        </div>
+        <div class="small-2 columns">
+          <a href="" onclick="gotoWiki(); return false;" class="button postfix">Go</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+function gotoWiki(){
+  window.location.href = $("#towiki [name=wikiname]").val();
+}
+</script>
