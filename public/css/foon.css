@@ -1,3 +1,13 @@
 #hero {
-  padding: 100px 20px 0px 20px;
+  background: url("/img/white_wall_hash.png");
+  padding: 50px 20px 0px 20px;
+  height: 300px;
+}
+
+#wikilinks {
+  margin: 20px 0px 20px 0px;
+}
+
+.centered-text {
+  text-align: center;
 }
