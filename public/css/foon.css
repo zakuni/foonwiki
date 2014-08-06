@@ -11,3 +11,7 @@
 .centered-text {
   text-align: center;
 }
+
+ul.undotted {
+  list-style-type: none;
+}

@@ -44,7 +44,20 @@ func main() {
 	}))
 
 	m.Get("/", func(r render.Render) {
-		r.HTML(200, "index", nil)
+		var newPages []models.Page
+		var updatedPages []models.Page
+		db.Limit(5).Order("created_at").Find(&newPages)
+		db.Limit(5).Order("updated_at").Find(&updatedPages)
+		s := struct {
+			Title string
+			NewPages []models.Page
+			UpdatedPages []models.Page
+		} {
+			"FoonWiki",
+			newPages,
+			updatedPages,
+		}
+		r.HTML(200, "index", s)
 	})
 
 	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params, r render.Render) {

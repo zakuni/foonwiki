@@ -24,13 +24,41 @@
 <section id="wikilinks">
   <div class="row centered-text">
     <div class="small-4 columns">
-      <h4>Pages You have Seen</h3>
+      <h4>Pages You have Seen</h4>
+      <ul class="undotted">
+        <br>
+        <li style="text-align:right">
+          view all >
+        </li>
+      </ul>
     </div>
     <div class="small-4 columns">
       <h4>Newly Created Pages</h4>
+      <ul class="undotted">
+        {{range .NewPages}}
+        <li>
+          {{.Name}}
+        </li>
+        {{end}}
+        <br>
+        <li style="text-align:right">
+          view all >
+        </li>
+      </ul>
     </div>
     <div class="small-4 columns">
       <h4>Recently Updated Pages</h4>
+      <ul class="undotted">
+        {{range .UpdatedPages}}
+        <li>
+          {{.Name}}
+        </li>
+        {{end}}
+        <br>
+        <li style="text-align:right">
+          view all >
+        </li>
+      </ul>
     </div>
   </div>
 </section>
