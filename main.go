@@ -49,10 +49,10 @@ func main() {
 		db.Limit(5).Order("created_at").Find(&newPages)
 		db.Limit(5).Order("updated_at").Find(&updatedPages)
 		s := struct {
-			Title string
-			NewPages []models.Page
+			Title        string
+			NewPages     []models.Page
 			UpdatedPages []models.Page
-		} {
+		}{
 			"FoonWiki",
 			newPages,
 			updatedPages,
@@ -71,8 +71,8 @@ func main() {
 
 		s := struct {
 			Title string
-			Wiki models.Wiki
-		} {
+			Wiki  models.Wiki
+		}{
 			wikiName,
 			wiki,
 		}
@@ -93,11 +93,11 @@ func main() {
 		}
 
 		s := struct {
-			Title string
+			Title    string
 			WikiName string
-			Page models.Page
-		} {
-			wikiName+"/"+pageName,
+			Page     models.Page
+		}{
+			wikiName + "/" + pageName,
 			wikiName,
 			page,
 		}
@@ -111,16 +111,20 @@ func main() {
 		pageName := params["page"]
 
 		db.FirstOrCreate(&wiki, models.Wiki{Name: wikiName})
-		db.FirstOrCreate(&page, models.Page{Name: pageName, WikiId: wiki.Id})
+		db.FirstOrCreate(&page, models.Page{
+			Name:   pageName,
+			WikiId: wiki.Id,
+		})
 		page.Content = req.FormValue("content")
+		page.Wiki = wiki
 		db.Save(&page)
 
 		s := struct {
-			Title string
+			Title    string
 			WikiName string
-			Page models.Page
-		} {
-			wikiName+"/"+pageName,
+			Page     models.Page
+		}{
+			wikiName + "/" + pageName,
 			wikiName,
 			page,
 		}
