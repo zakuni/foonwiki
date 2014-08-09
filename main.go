@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"net/http"
+	"strconv"
 
 	"github.com/go-martini/martini"
 	"github.com/golang/glog"
@@ -43,21 +44,37 @@ func main() {
 		Layout: "layout",
 	}))
 
-	m.Get("/", func(r render.Render) {
-		var newPages []models.Page
-		var updatedPages []models.Page
-		db.Limit(5).Order("created_at").Find(&newPages)
-		db.Limit(5).Order("updated_at").Find(&updatedPages)
-		s := struct {
-			Title        string
-			NewPages     []models.Page
-			UpdatedPages []models.Page
-		}{
-			"FoonWiki",
-			newPages,
-			updatedPages,
+	m.Get("/", func(req *http.Request, r render.Render) {
+		qid := req.URL.Query().Get("id")
+		if qid != "" {
+			id, _ := strconv.ParseInt(qid, 10, 64)
+			var page models.Page
+			db.Where(models.Page{Id: id}).First(&page)
+
+			s := struct {
+				Title string
+				Page  models.Page
+			}{
+				page.Name,
+				page,
+			}
+			r.HTML(200, "page", s)
+		} else {
+			var newPages []models.Page
+			var updatedPages []models.Page
+			db.Limit(5).Order("created_at").Find(&newPages)
+			db.Limit(5).Order("updated_at").Find(&updatedPages)
+			s := struct {
+				Title        string
+				NewPages     []models.Page
+				UpdatedPages []models.Page
+			}{
+				"FoonWiki",
+				newPages,
+				updatedPages,
+			}
+			r.HTML(200, "index", s)
 		}
-		r.HTML(200, "index", s)
 	})
 
 	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params, r render.Render) {
