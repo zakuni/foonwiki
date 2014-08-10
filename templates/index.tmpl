@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="small-4 columns end">
+    <div class="small-6 large-4 columns end">
       <form id="towiki">
         <div class="row collapse">
           <div class="small-10 columns">
@@ -37,7 +37,7 @@
       <ul class="undotted">
         {{range .NewPages}}
         <li>
-          {{.Name}}
+          <a href="/?id={{.Id}}">{{.Name}}</a>
         </li>
         {{end}}
         <br>
@@ -51,7 +51,7 @@
       <ul class="undotted">
         {{range .UpdatedPages}}
         <li>
-          {{.Name}}
+          <a href="/?id={{.Id}}">{{.Name}}</a>
         </li>
         {{end}}
         <br>
