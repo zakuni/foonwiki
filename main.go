@@ -16,7 +16,7 @@ import (
 var db gorm.DB
 
 func initDb() gorm.DB {
-	db, err := gorm.Open("postgres", "user=zakuni dbname=foon sslmode=disable")
+	db, err := gorm.Open("postgres", "user=foon dbname=foon sslmode=disable")
 	checkErr(err, "sql.Open failed")
 	db.DB()
 
