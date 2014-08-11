@@ -11,6 +11,10 @@ $ go build
 Usage
 -----
 ```
-$ PORT=8000 ./foon
+$ ./foon
 ```
 add `-logstderr` option to output logs to console.
+
+About
+---
+Heavily inspired by [gyazz](http://gyazz.com).
