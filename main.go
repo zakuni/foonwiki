@@ -51,20 +51,20 @@ func main() {
 			var page models.Page
 			db.First(&page, id)
 
-			s := struct {
+			r.HTML(200, "page", struct {
 				Title string
 				Page  models.Page
 			}{
 				page.Name,
 				page,
-			}
-			r.HTML(200, "page", s)
+			})
 		} else {
 			var newPages []models.Page
 			var updatedPages []models.Page
 			db.Limit(5).Order("created_at").Find(&newPages)
 			db.Limit(5).Order("updated_at").Find(&updatedPages)
-			s := struct {
+
+			r.HTML(200, "index", struct {
 				Title        string
 				NewPages     []models.Page
 				UpdatedPages []models.Page
@@ -72,8 +72,7 @@ func main() {
 				"FoonWiki",
 				newPages,
 				updatedPages,
-			}
-			r.HTML(200, "index", s)
+			})
 		}
 	})
 
@@ -86,14 +85,13 @@ func main() {
 		db.Model(&wiki).Related(&pages)
 		wiki.Pages = pages
 
-		s := struct {
+		r.HTML(200, "wiki", struct {
 			Title string
 			Wiki  models.Wiki
 		}{
 			wikiName,
 			wiki,
-		}
-		r.HTML(200, "wiki", s)
+		})
 	})
 
 	m.Get("/:wiki/:page", func(w http.ResponseWriter, params martini.Params, r render.Render) {
@@ -109,7 +107,7 @@ func main() {
 			page.Name = pageName
 		}
 
-		s := struct {
+		r.HTML(200, "page", struct {
 			Title    string
 			WikiName string
 			Page     models.Page
@@ -117,8 +115,7 @@ func main() {
 			wikiName + "/" + pageName,
 			wikiName,
 			page,
-		}
-		r.HTML(200, "page", s)
+		})
 	})
 
 	m.Post("/:wiki/:page", func(w http.ResponseWriter, req *http.Request, params martini.Params, r render.Render) {
@@ -136,7 +133,7 @@ func main() {
 		page.Wiki = wiki
 		db.Save(&page)
 
-		s := struct {
+		r.HTML(200, "page", struct {
 			Title    string
 			WikiName string
 			Page     models.Page
@@ -144,8 +141,7 @@ func main() {
 			wikiName + "/" + pageName,
 			wikiName,
 			page,
-		}
-		r.HTML(200, "page", s)
+		})
 	})
 
 	m.Run()
