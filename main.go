@@ -49,7 +49,7 @@ func main() {
 		if qid != "" {
 			id, _ := strconv.ParseInt(qid, 10, 64)
 			var page models.Page
-			db.Where(models.Page{Id: id}).First(&page)
+			db.First(&page, id)
 
 			s := struct {
 				Title string
