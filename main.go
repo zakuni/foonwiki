@@ -61,8 +61,8 @@ func main() {
 		} else {
 			var newPages []models.Page
 			var updatedPages []models.Page
-			db.Limit(5).Order("created_at").Find(&newPages)
-			db.Limit(5).Order("updated_at").Find(&updatedPages)
+			db.Limit(5).Order("created_at desc").Find(&newPages)
+			db.Limit(5).Order("updated_at desc").Find(&updatedPages)
 
 			r.HTML(200, "index", struct {
 				Title        string
