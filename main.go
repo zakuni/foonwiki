@@ -76,6 +76,25 @@ func main() {
 		}
 	})
 
+	m.Get("/pages", func(req *http.Request, r render.Render) {
+		qid := req.URL.Query().Get("sortedby")
+		var allPages []models.Page
+
+		if qid == "created" {
+			db.Order("created_at desc").Find(&allPages)
+		} else if qid == "updated" {
+			db.Order("updated_at desc").Find(&allPages)
+		}
+
+		r.HTML(200, "pages", struct {
+			Title string
+			Pages []models.Page
+		}{
+			"AllPages",
+			allPages,
+		})
+	})
+
 	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var pages []models.Page
