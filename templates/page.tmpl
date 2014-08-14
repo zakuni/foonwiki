@@ -2,7 +2,7 @@
   <div class="small-12 column">
     <h1>{{.Page.Name}}</h1>
     <p>{{.Page.Content}}</p>
-    <form action="{{.Page.Name}}" method="POST">
+    <form action="/pages/{{.Page.Id}}" method="POST">
       <textarea name="content"></textarea>
       <br>
       <input type="submit" value="save">

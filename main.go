@@ -96,7 +96,24 @@ func main() {
 		})
 	})
 
-	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params, r render.Render) {
+	m.Post("/pages/:id", func(req *http.Request, params martini.Params, r render.Render) {
+		var page models.Page
+		id := params["id"]
+
+		db.First(&page, id)
+		page.Content = req.FormValue("content")
+		db.Save(&page)
+
+		r.HTML(200, "page", struct {
+			Title string
+			Page  models.Page
+		}{
+			page.Name,
+			page,
+		})
+	})
+
+	m.Get("/:wiki", func(params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var pages []models.Page
 		wikiName := params["wiki"]
