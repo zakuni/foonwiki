@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/go-martini/martini"
@@ -16,7 +17,7 @@ import (
 var db gorm.DB
 
 func initDb() gorm.DB {
-	db, err := gorm.Open("postgres", "user=foon dbname=foon sslmode=disable")
+	db, err := gorm.Open("postgres", os.Getenv("DATABASE_URL"))
 	checkErr(err, "sql.Open failed")
 	db.DB()
 
