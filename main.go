@@ -131,7 +131,7 @@ func main() {
 		})
 	})
 
-	m.Get("/:wiki/:page", func(w http.ResponseWriter, params martini.Params, r render.Render) {
+	m.Get("/:wiki/:page", func(params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var page models.Page
 		wikiName := params["wiki"]
@@ -155,7 +155,7 @@ func main() {
 		})
 	})
 
-	m.Post("/:wiki/:page", func(w http.ResponseWriter, req *http.Request, params martini.Params, r render.Render) {
+	m.Post("/:wiki/:page", func(req *http.Request, params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var page models.Page
 		wikiName := params["wiki"]
