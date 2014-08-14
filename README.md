@@ -15,6 +15,14 @@ $ ./foon
 ```
 add `-logstderr` option to output logs to console.
 
+Development
+-----
+using [gin](https://github.com/codegangsta/gin) for live-reloading.  
+`.env` file is necessary for local environment variables.
+```
+$ gin run main.go
+```
+
 About
 ---
 Heavily inspired by [gyazz](http://gyazz.com).
