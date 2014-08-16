@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/go-martini/martini"
 	"github.com/golang/glog"
@@ -96,7 +97,36 @@ func main() {
 		})
 	})
 
-	m.Get("/:wiki", func(w http.ResponseWriter, params martini.Params, r render.Render) {
+	m.Get("/pages/new", func(r render.Render) {
+		r.HTML(200, "page", nil)
+	})
+
+	m.Post("/pages/", func(req *http.Request, params martini.Params, r render.Render) {
+		var page models.Page
+		page.Name = time.Now().Format("20060102150405")
+		page.Content = req.FormValue("content")
+		db.Save(&page)
+		r.Redirect("/?id=" + strconv.FormatInt(page.Id, 10))
+	})
+
+	m.Post("/pages/:id", func(req *http.Request, params martini.Params, r render.Render) {
+		var page models.Page
+		id := params["id"]
+
+		db.First(&page, id)
+		page.Content = req.FormValue("content")
+		db.Save(&page)
+
+		r.HTML(200, "page", struct {
+			Title string
+			Page  models.Page
+		}{
+			page.Name,
+			page,
+		})
+	})
+
+	m.Get("/:wiki", func(params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var pages []models.Page
 		wikiName := params["wiki"]
@@ -114,7 +144,7 @@ func main() {
 		})
 	})
 
-	m.Get("/:wiki/:page", func(w http.ResponseWriter, params martini.Params, r render.Render) {
+	m.Get("/:wiki/:page", func(params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var page models.Page
 		wikiName := params["wiki"]
@@ -138,7 +168,7 @@ func main() {
 		})
 	})
 
-	m.Post("/:wiki/:page", func(w http.ResponseWriter, req *http.Request, params martini.Params, r render.Render) {
+	m.Post("/:wiki/:page", func(req *http.Request, params martini.Params, r render.Render) {
 		var wiki models.Wiki
 		var page models.Page
 		wikiName := params["wiki"]
