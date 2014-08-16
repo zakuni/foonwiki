@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/go-martini/martini"
 	"github.com/golang/glog"
@@ -94,6 +95,18 @@ func main() {
 			"AllPages",
 			allPages,
 		})
+	})
+
+	m.Get("/pages/new", func(r render.Render) {
+		r.HTML(200, "page", nil)
+	})
+
+	m.Post("/pages/", func(req *http.Request, params martini.Params, r render.Render) {
+		var page models.Page
+		page.Name = time.Now().Format("20060102150405")
+		page.Content = req.FormValue("content")
+		db.Save(&page)
+		r.Redirect("/?id=" + strconv.FormatInt(page.Id, 10))
 	})
 
 	m.Post("/pages/:id", func(req *http.Request, params martini.Params, r render.Render) {
