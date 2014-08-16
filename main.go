@@ -103,7 +103,7 @@ func main() {
 
 	m.Post("/pages/", func(req *http.Request, params martini.Params, r render.Render) {
 		var page models.Page
-		page.Name = time.Now().Format("20060102150405")
+		page.Name = time.Now().Format("2006/01/02 15:04:05")
 		page.Content = req.FormValue("content")
 		db.Save(&page)
 		r.Redirect("/?id=" + strconv.FormatInt(page.Id, 10))
