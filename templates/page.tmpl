@@ -1,8 +1,8 @@
 <div class="row">
   <div class="small-12 column">
-    <h1>{{.Page.Name}}</h1>
+    <h1 id="pagename" contenteditable=true>{{.Page.Name}}</h1>
     <p>{{.Page.Content}}</p>
-    <form action="/pages/{{.Page.Id}}" method="POST">
+    <form id="contents" action="/pages/{{.Page.Id}}" method="POST">
       <textarea name="content"></textarea>
       <br>
       <input type="submit" value="save">
