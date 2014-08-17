@@ -13,4 +13,6 @@ type Page struct {
 	WikiId    int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+
+	RelatedPages []Page
 }
