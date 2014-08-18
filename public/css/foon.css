@@ -15,3 +15,8 @@
 ul.undotted {
   list-style-type: none;
 }
+
+#pagename {
+  border-bottom: 1px dotted;
+  margin-bottom: 20px;
+}
