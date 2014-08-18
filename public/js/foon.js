@@ -44,4 +44,5 @@ $("#contents").submit(function(e){
 })
 
 $(function (){
+  $("#content").focus();
 });

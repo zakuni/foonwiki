@@ -20,3 +20,8 @@ ul.undotted {
   border-bottom: 1px dotted;
   margin-bottom: 20px;
 }
+
+[placeholder]:empty:before {
+    content: attr(placeholder);
+    color: #aaa;
+}
