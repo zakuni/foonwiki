@@ -30,8 +30,16 @@ $('#content').hover(function() {
 
 
 $("#contents").submit(function(e){
+  var ce = $("<pre />").html($("#content").html());
+  if($.browser.webkit)
+    ce.find("div").replaceWith(function() { return "\n" + this.innerHTML; });
+  if($.browser.msie)
+    ce.find("p").replaceWith(function() { return this.innerHTML + "<br>"; });
+  if($.browser.mozilla || $.browser.opera ||$.browser.msie )
+    ce.find("br").replaceWith("\n");
+
   var fd = new FormData();
-  fd.append("content", $("#content").html());
+  fd.append("content", ce.text());
   fd.append("pagename", $("#pagename").html());
   $.ajax({
     url: $("#contents").attr("action"),

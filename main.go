@@ -112,12 +112,31 @@ func main() {
 		r.Redirect("/?id=" + strconv.FormatInt(page.Id, 10))
 	})
 
+	m.Get("/pages/:id", func(params martini.Params, r render.Render) {
+		qid := params["id"]
+
+		id, _ := strconv.ParseInt(qid, 10, 64)
+		var page models.Page
+		db.First(&page, id)
+
+		r.HTML(200, "page", struct {
+			Title string
+			Page  models.Page
+		}{
+			page.Name,
+			page,
+		})
+	})
+
 	m.Post("/pages/:id", func(req *http.Request, params martini.Params, r render.Render) {
 		var page models.Page
 		id := params["id"]
 
 		db.First(&page, id)
 		page.Name = req.FormValue("pagename")
+		if page.Name == "" {
+			page.Name = time.Now().Format("2006/01/02 15:04:05")
+		}
 		page.Content = req.FormValue("content")
 		db.Save(&page)
 

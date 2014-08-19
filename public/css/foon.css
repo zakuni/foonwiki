@@ -23,5 +23,9 @@ ul.undotted {
 
 [placeholder]:empty:before {
     content: attr(placeholder);
-    color: #aaa;
+    color: #eee;
+}
+
+#content {
+  white-space: pre;
 }
