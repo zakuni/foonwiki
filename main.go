@@ -118,6 +118,9 @@ func main() {
 
 		db.First(&page, id)
 		page.Name = req.FormValue("pagename")
+		if page.Name == "" {
+			page.Name = time.Now().Format("2006/01/02 15:04:05")
+		}
 		page.Content = req.FormValue("content")
 		db.Save(&page)
 

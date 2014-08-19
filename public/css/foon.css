@@ -25,3 +25,7 @@ ul.undotted {
     content: attr(placeholder);
     color: #aaa;
 }
+
+#content {
+  white-space: pre;
+}
