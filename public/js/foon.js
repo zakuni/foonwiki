@@ -48,7 +48,7 @@ $("#contents").submit(function(e){
     contentType: false
   });
   return false;
-})
+});
 
 $(function (){
   $("#content").focus();
