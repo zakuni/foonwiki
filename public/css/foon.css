@@ -1,18 +1,18 @@
 #hero {
   background: url("/img/white_wall_hash.png");
-  padding: 50px 20px 0px 20px;
+  padding: 50px 20px 0 20px;
   height: 300px;
 }
 
 #wikilinks {
-  margin: 20px 0px 20px 0px;
+  margin: 20px 0 20px 0;
 }
 
 .centered-text {
   text-align: center;
 }
 
-ul.undotted {
+.undotted {
   list-style-type: none;
 }
 
@@ -20,10 +20,6 @@ ul.undotted {
   border-bottom: 1px dotted;
   margin-top: 15px;
   margin-bottom: 10px;
-}
-
-#pagename:focus {
-  outline: none;
 }
 
 [placeholder]:empty:before {
@@ -36,6 +32,6 @@ ul.undotted {
   margin-bottom: 20px;
 }
 
-#content:focus {
+.editable:focus {
   outline: none;
 }
