@@ -18,8 +18,7 @@ $('#pagename').hover(function() {
 
 $('#content').hover(function() {
  $(this).css({
-   'cursor': 'text',
-   'background-color': '#fafafa'
+   'cursor': 'text'
  });
  }, function() {
  $(this).css({

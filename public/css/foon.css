@@ -18,7 +18,12 @@ ul.undotted {
 
 #pagename {
   border-bottom: 1px dotted;
-  margin-bottom: 20px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+#pagename:focus {
+  outline: none;
 }
 
 [placeholder]:empty:before {
@@ -28,4 +33,9 @@ ul.undotted {
 
 #content {
   white-space: pre;
+  margin-bottom: 20px;
+}
+
+#content:focus {
+  outline: none;
 }
