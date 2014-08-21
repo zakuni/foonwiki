@@ -30,6 +30,10 @@
     color: #eee;
 }
 
+#pagenameinput{
+  border-bottom: 1px dotted;
+}
+
 #content {
   white-space: pre;
   margin-bottom: 20px;
