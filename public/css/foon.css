@@ -16,9 +16,12 @@
   list-style-type: none;
 }
 
+.pagetitle {
+  margin-top: 15px;
+}
+
 #pagename {
   border-bottom: 1px dotted;
-  margin-top: 15px;
   margin-bottom: 10px;
 }
 
