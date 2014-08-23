@@ -1,9 +1,9 @@
 $("#towiki").submit(function(e){
-    gotoWiki();
-    return false;
+  gotoWiki();
+  return false;
 });
 $("#gobutton").click(function(e){
-    gotoWiki();
+  gotoWiki();
 });
 
 function gotoWiki(){
@@ -11,20 +11,20 @@ function gotoWiki(){
 }
 
 $('#pagename').hover(function() {
- $(this).css('cursor','text');
- }, function() {
- $(this).css('cursor','auto');
+  $(this).css('cursor','text');
+}, function() {
+  $(this).css('cursor','auto');
 });
 
 $('#content').hover(function() {
- $(this).css({
-   'cursor': 'text'
- });
- }, function() {
- $(this).css({
-   'cursor': 'auto',
-   'background-color': '#fff'
- });
+  $(this).css({
+    'cursor': 'text'
+  });
+}, function() {
+  $(this).css({
+    'cursor': 'auto',
+    'background-color': '#fff'
+  });
 });
 
 $("#pagename").click(function(e){
