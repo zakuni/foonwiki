@@ -21,7 +21,6 @@
 }
 
 #pagename {
-  border-bottom: 1px dotted;
   margin-bottom: 10px;
 }
 
@@ -30,7 +29,7 @@
     color: #eee;
 }
 
-#pagenameinput{
+.border-dotted {
   border-bottom: 1px dotted;
 }
 
