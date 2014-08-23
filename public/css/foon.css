@@ -30,7 +30,7 @@
 }
 
 .border-dotted {
-  border-bottom: 1px dotted;
+  border-bottom: 1px dotted !important;
 }
 
 #content {
