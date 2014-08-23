@@ -22,6 +22,9 @@
 
 #pagename {
   margin-bottom: 10px;
+}
+
+.cursor-text {
   cursor: text;
 }
 

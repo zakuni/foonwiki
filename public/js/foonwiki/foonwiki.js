@@ -10,17 +10,6 @@ function gotoWiki(){
   window.location.href = $("#towiki [name=wikiname]").val();
 }
 
-$('#content').hover(function() {
-  $(this).css({
-    'cursor': 'text'
-  });
-}, function() {
-  $(this).css({
-    'cursor': 'auto',
-    'background-color': '#fff'
-  });
-});
-
 $("#pagenameform").submit(function(e){
   var ce = $("<pre />").html($("#content").html());
   if($.browser.webkit)
