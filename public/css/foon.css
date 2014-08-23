@@ -22,6 +22,7 @@
 
 #pagename {
   margin-bottom: 10px;
+  cursor: text;
 }
 
 [placeholder]:empty:before {
