@@ -1,3 +1,14 @@
+var PageApp = new Backbone.Marionette.Application();
+PageApp.commands.setHandler("postContents", function(formData){
+  $.ajax({
+    url: $("#contents").attr("action"),
+    type: "POST",
+    data: formData,
+    processData: false,
+    contentType: false
+  });
+});
+
 $("#pagenameform").submit(function(e){
   var ce = $("<pre />").html($("#content").html());
   if($.browser.webkit)
@@ -10,13 +21,7 @@ $("#pagenameform").submit(function(e){
   var fd = new FormData();
   fd.append("content", ce.text());
   fd.append("pagename", $("#pagenameinput").val());
-  $.ajax({
-    url: $("#contents").attr("action"),
-    type: "POST",
-    data: fd,
-    processData: false,
-    contentType: false
-  });
+  PageApp.execute("postContents", fd);
   $("#pagename").text($("#pagenameinput").val());
   $("#pagename").show();
   $("#pagenameform").hide();
@@ -35,13 +40,7 @@ $("#contents").submit(function(e){
   var fd = new FormData();
   fd.append("content", ce.text());
   fd.append("pagename", $("#pagenameinput").val());
-  $.ajax({
-    url: $("#contents").attr("action"),
-    type: "POST",
-    data: fd,
-    processData: false,
-    contentType: false
-  });
+  PageApp.execute("postContents", fd);
   return false;
 });
 
