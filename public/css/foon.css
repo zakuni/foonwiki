@@ -24,13 +24,17 @@
   margin-bottom: 10px;
 }
 
+.cursor-text {
+  cursor: text;
+}
+
 [placeholder]:empty:before {
     content: attr(placeholder);
     color: #eee;
 }
 
 .border-dotted {
-  border-bottom: 1px dotted;
+  border-bottom: 1px dotted !important;
 }
 
 #content {
