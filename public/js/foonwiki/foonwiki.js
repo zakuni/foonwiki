@@ -1,30 +1,30 @@
 var PageApp = new Backbone.Marionette.Application();
-PageApp.reqres.setHandler("parseContentEditable", function(html){
-  var ce = $("<pre />").html(html);
+
+PageApp.commands.setHandler("postContents", function(){
+  var ce = $("<pre />").html($("#content").html());
   if($.browser.webkit)
     ce.find("div").replaceWith(function() { return "\n" + this.innerHTML; });
   if($.browser.msie)
     ce.find("p").replaceWith(function() { return this.innerHTML + "<br>"; });
   if($.browser.mozilla || $.browser.opera ||$.browser.msie )
     ce.find("br").replaceWith("\n");
-  return ce;
-});
-PageApp.commands.setHandler("postContents", function(formData){
+
+  var fd = new FormData();
+  fd.append("content", ce.text());
+  fd.append("pagename", $("#pagenameinput").val());
+
   $.ajax({
     url: $("#contents").attr("action"),
     type: "POST",
-    data: formData,
+    data: fd,
     processData: false,
     contentType: false
   });
 });
 
+
 $("#pagenameform").submit(function(e){
-  var ce = PageApp.request("parseContentEditable", $("#content").html());
-  var fd = new FormData();
-  fd.append("content", ce.text());
-  fd.append("pagename", $("#pagenameinput").val());
-  PageApp.execute("postContents", fd);
+  PageApp.execute("postContents");
   $("#pagename").text($("#pagenameinput").val());
   $("#pagename").show();
   $("#pagenameform").hide();
@@ -32,11 +32,7 @@ $("#pagenameform").submit(function(e){
 });
 
 $("#contents").submit(function(e){
-  var ce = PageApp.request("parseContentEditable", $("#content").html());
-  var fd = new FormData();
-  fd.append("content", ce.text());
-  fd.append("pagename", $("#pagenameinput").val());
-  PageApp.execute("postContents", fd);
+  PageApp.execute("postContents");
   return false;
 });
 
