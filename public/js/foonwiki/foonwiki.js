@@ -77,5 +77,4 @@ $(function (){
   $("#content").focus();
 
   var pageNameView = new PageNameView();
-  pageNameView.render();
 });
