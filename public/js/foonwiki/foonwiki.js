@@ -47,7 +47,14 @@ var PageNameView = Marionette.ItemView.extend({
 
   showPageForm: function() {
     this.$el.hide();
-    $("#pagenameform").show();
+    var that = this;
+    $("#pagenameform").show().focusout(function(){
+      $("#pagenameform").hide();
+      that.$el.show();
+    });
+    setTimeout(function(){
+      $("#pagenameinput").focus();
+    }, 0);
   }
 });
 
