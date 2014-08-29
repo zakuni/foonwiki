@@ -58,12 +58,22 @@ var PageNameView = Marionette.ItemView.extend({
   }
 });
 
+var PageContentView = Marionette.ItemView.extend({
+  el: '#content',
+
+  template: false,
+
+  focus: function() {
+    this.$el.focus();
+  }
+});
 
 $(function (){
-  $("#content").focus();
   $("body").click(function(){
     $("#content").focus();
   });
 
   var pageNameView = new PageNameView();
+  var pageContentView = new PageContentView();
+  pageContentView.focus();
 });
