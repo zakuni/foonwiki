@@ -1,16 +1,16 @@
 <section class="pagetitle">
   <div class="row">
     <div class="small-12 columns">
-      <h3 id="pagename" placeholder="no title">{{.Page.Name}}</h3>
+      <h3 id="pagename" class="border-dotted cursor-text" placeholder="no title">{{.Page.Name}}</h3>
       <form id="pagenameform" class="pagename hide">
-        <input id="pagenameinput" type="text" placeholder="no title" value={{.Page.Name}}>
+        <input id="pagenameinput" class="border-dotted" type="text" placeholder="no title" value={{.Page.Name}}>
       </form>
     </div>
   </div>
 </section>
 <div class="row">
   <div class="small-12 column">
-    <div id="content" class="editable" contenteditable=true>{{.Page.Content}}</div>
+    <div id="content" class="editable cursor-text" contenteditable=true>{{.Page.Content}}</div>
     <form id="contents" action="/pages/{{.Page.Id}}" method="POST">
       <input type="submit" value="save">
     </form>
