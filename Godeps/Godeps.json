@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/zakuni/foon",
+	"ImportPath": "github.com/zakuni/foonwiki",
 	"GoVersion": "go1.3",
 	"Deps": [
 		{
