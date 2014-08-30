@@ -12,7 +12,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 	"github.com/martini-contrib/render"
-	"github.com/zakuni/foon/models"
+	"github.com/zakuni/foonwiki/models"
 )
 
 var db gorm.DB
