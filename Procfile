@@ -1,1 +1,1 @@
-web: foon
+web: foonwiki
