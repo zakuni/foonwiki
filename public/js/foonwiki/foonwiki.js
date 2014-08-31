@@ -22,6 +22,13 @@ PageApp.commands.setHandler("postContents", function(){
   });
 });
 
+PageApp.addRegions({
+  titleRegion: "#pagetitle"
+});
+
+var Page = Backbone.Model.extend({
+
+});
 
 $("#pagenameform").submit(function(e){
   PageApp.execute("postContents");
@@ -41,16 +48,25 @@ var PageNameView = Marionette.ItemView.extend({
 
   template: false,
 
+  initialize: function(){
+    this.model.set("name", $("#pagenameinput").val());
+    this.listenTo(this.model, "change:name", this.modelNameChanged);
+  },
+
   events: {
     'click': 'showPageForm'
   },
 
-  showPageForm: function() {
+  modelNameChanged: function(model, value){
+    this.$el.html(value);
+  },
+
+  showPageForm: function(){
     this.$el.hide();
     var that = this;
     $("#pagenameform").show().focusout(function(){
+      that.model.set("name", $("#pagenameinput").val());
       $("#pagenameform").hide();
-      $("#pagename").html($("#pagenameinput").val());
       that.$el.show();
     });
     setTimeout(function(){
@@ -70,7 +86,10 @@ var PageContentView = Marionette.ItemView.extend({
 });
 
 $(function (){
-  var pageNameView = new PageNameView();
+  var page = new Page();
+  PageApp.titleRegion.attachView(new PageNameView({
+    model: page
+  }));
   var pageContentView = new PageContentView();
   pageContentView.focus();
 
