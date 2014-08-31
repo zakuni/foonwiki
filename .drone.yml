@@ -1,0 +1,4 @@
+deploy:
+    heroku:
+        app: foonwiki
+        force: true
