@@ -23,7 +23,8 @@ PageApp.commands.setHandler("postContents", function(){
 });
 
 PageApp.addRegions({
-  titleRegion: "#pagetitle"
+  titleRegion: "#pagetitle",
+  contentRegion: "#content"
 });
 
 var Page = Backbone.Model.extend({
@@ -86,12 +87,12 @@ var PageContentView = Marionette.ItemView.extend({
 });
 
 $(function (){
-  var page = new Page();
   PageApp.titleRegion.attachView(new PageNameView({
-    model: page
+    model: new Page()
   }));
   var pageContentView = new PageContentView();
   pageContentView.focus();
+  PageApp.contentRegion.attachView(pageContentView);
 
   $("body").click(function(){
     pageContentView.focus();
