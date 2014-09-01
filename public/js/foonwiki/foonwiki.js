@@ -76,6 +76,12 @@ var PageNameView = Marionette.ItemView.extend({
   }
 });
 
+var PageNameFormView = Marionette.ItemView.extend({
+  el: '#pagenameform',
+
+  template: false
+});
+
 var PageContentView = Marionette.ItemView.extend({
   el: '#content',
 
@@ -90,6 +96,7 @@ $(function (){
   PageApp.titleRegion.attachView(new PageNameView({
     model: new Page()
   }));
+  PageApp.titleRegion.attachView(new PageNameFormView());
   var pageContentView = new PageContentView();
   pageContentView.focus();
   PageApp.contentRegion.attachView(pageContentView);
