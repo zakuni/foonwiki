@@ -23,7 +23,8 @@ PageApp.commands.setHandler("postContents", function(){
 });
 
 PageApp.addRegions({
-  titleRegion: "#pagetitle"
+  titleRegion: "#pagetitle",
+  contentRegion: "#content"
 });
 
 var Page = Backbone.Model.extend({
@@ -75,6 +76,12 @@ var PageNameView = Marionette.ItemView.extend({
   }
 });
 
+var PageNameFormView = Marionette.ItemView.extend({
+  el: '#pagenameform',
+
+  template: false
+});
+
 var PageContentView = Marionette.ItemView.extend({
   el: '#content',
 
@@ -86,12 +93,13 @@ var PageContentView = Marionette.ItemView.extend({
 });
 
 $(function (){
-  var page = new Page();
   PageApp.titleRegion.attachView(new PageNameView({
-    model: page
+    model: new Page()
   }));
+  PageApp.titleRegion.attachView(new PageNameFormView());
   var pageContentView = new PageContentView();
   pageContentView.focus();
+  PageApp.contentRegion.attachView(pageContentView);
 
   $("body").click(function(){
     pageContentView.focus();
