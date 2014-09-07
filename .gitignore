@@ -1,6 +1,6 @@
 .env
 Godeps/Readme
 Godeps/_workspace
-foonwiki
+/foonwiki
 
 gin-bin
