@@ -28,7 +28,11 @@ PageApp.addRegions({
 });
 
 var Page = Backbone.Model.extend({
-
+  initialize: function(){
+    this.on("change:name", function(){
+      localStorage.setItem("recentPage", JSON.stringify(this));
+    });
+  }
 });
 
 $("#pagenameform").submit(function(e){
