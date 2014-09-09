@@ -97,6 +97,11 @@ var PageContentView = Marionette.ItemView.extend({
 });
 
 $(function (){
+  var recentPage = localStorage.getItem("recentPage");
+  if(recentPage !== null){
+    $("#seen ul").append("<li><a href='/?id='>"+JSON.parse(recentPage).name+"</a></li>");
+  }
+
   PageApp.titleRegion.attachView(new PageNameView({
     model: new Page()
   }));
