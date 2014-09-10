@@ -6,6 +6,7 @@ cookieParser = require 'cookie-parser'
 bodyParser = require 'body-parser'
 
 routes = require './routes/index'
+pages = require './routes/pages'
 users = require './routes/users'
 
 app = express()
@@ -22,10 +23,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('node-compass')({mode: 'expanded'}));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
-app.use('/users', users);
-
+`
+app.use('/', routes)
+app.use('/pages', pages)
+app.use('/users', users)
+`
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
