@@ -71,7 +71,7 @@ func main() {
 				NewPages     []models.Page
 				UpdatedPages []models.Page
 			}{
-				"FoonWiki",
+				"",
 				newPages,
 				updatedPages,
 			})
