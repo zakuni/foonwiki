@@ -1,0 +1,47 @@
+#hero {
+  background: url("/img/white_wall_hash.png");
+  padding: 50px 20px 0 20px;
+  height: 300px;
+}
+
+#wikilinks {
+  margin: 20px 0 20px 0;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.undotted {
+  list-style-type: none;
+}
+
+.pagetitle {
+  margin-top: 15px;
+}
+
+#pagename {
+  margin-bottom: 10px;
+}
+
+.cursor-text {
+  cursor: text;
+}
+
+[placeholder]:empty:before {
+    content: attr(placeholder);
+    color: #eee;
+}
+
+.border-dotted {
+  border-bottom: 1px dotted !important;
+}
+
+#content {
+  white-space: pre;
+  margin-bottom: 20px;
+}
+
+.editable:focus {
+  outline: none;
+}

@@ -4,3 +4,6 @@ Godeps/_workspace
 /foonwiki
 
 gin-bin
+
+node_modules
+public/.sass-cache/*
