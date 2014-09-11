@@ -3,7 +3,7 @@ router = express.Router()
 
 # GET pages listing.
 router.get('/', (req, res) ->
-  res.send('respond with a resource')
+  res.render('pages')
 )
 
 module.exports = router
