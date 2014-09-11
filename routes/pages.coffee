@@ -3,7 +3,9 @@ router = express.Router()
 
 # GET pages listing.
 router.get('/', (req, res) ->
-  res.render('pages')
+  pages = [{}]
+  res.render('pages', {pages: pages})
+)
 
 router.get('/new', (req, res) ->
   page = {id: '', name: '', content: ''}
