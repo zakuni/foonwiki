@@ -22,7 +22,21 @@ block content
         section#updated
           h4 Recently Updated Pages
           ul.undotted
+            each page in updatedPages
+              li
+                a(href="/?id=#{page.id}") #{page.name}
+              br
+            li(style="text-align:right")
+              a(href="/pages?sortedby=updated") view all&nbsp;
+                i.fa.fa-chevron-circle-right
       div.small-12.large-4.columns
         section#created
           h4 Newly Created Pages
           ul.undotted
+            each page in newPages
+              li
+                a(href="/?id=#{page.id}") #{page.name}
+              br
+            li(style="text-align:right")
+              a(href="/pages?sortedby=created") view all&nbsp;
+                i.fa.fa-chevron-circle-right

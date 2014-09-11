@@ -1,11 +1,11 @@
-`
-var express = require('express');
-var router = express.Router();
+express = require('express')
+router = express.Router()
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
-});
+# GET home page.
+router.get('/', (req, res) ->
+  updatedPages = []
+  newPages = []
+  res.render('index', { updatedPages: updatedPages, newPages: newPages })
+)
 
-module.exports = router;
-`
+module.exports = router
