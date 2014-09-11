@@ -30,7 +30,7 @@ PageApp.addRegions({
 var Page = Backbone.Model.extend({
   initialize: function(){
     this.on("change:name", function(){
-      localStorage.setItem("recentPage", JSON.stringify(this));
+      localStorage.setItem("recentPages", JSON.stringify(this));
     });
   }
 });
@@ -97,7 +97,7 @@ var PageContentView = Marionette.ItemView.extend({
 });
 
 $(function (){
-  var recentPage = localStorage.getItem("recentPage");
+  var recentPage = localStorage.getItem("recentPages");
   if(recentPage !== null){
     $("#seen ul").append("<li><a href='/?id='>"+JSON.parse(recentPage).name+"</a></li>");
   }
