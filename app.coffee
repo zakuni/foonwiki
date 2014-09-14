@@ -10,7 +10,7 @@ knex = require('knex')(
   connection:
     host : 'localhost'
     user : 'foon'
-    database : 'foon',
+    database : 'foon'
     charset : 'utf8'
 )
 bookshelf = require('bookshelf')(knex)
