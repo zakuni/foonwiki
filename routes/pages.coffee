@@ -5,8 +5,18 @@ module.exports = (app) ->
 
   # GET pages listing.
   router.get('/', (req, res) ->
-    pages = [{}]
-    res.render('pages', {pages: pages})
+    sortedby = req.query.sortedby
+
+    if sortedby is "created"
+      Page.query('orderBy', 'created_at', 'desc')
+        .fetchAll()
+          .then (pages) ->
+            res.render('pages', {pages: pages.models})
+    else if sortedby is "updated"
+      Page.query('orderBy', 'updated_at', 'desc')
+        .fetchAll()
+          .then (pages) ->
+            res.render('pages', {pages: pages.models})
   )
 
   router.get('/new', (req, res) ->
