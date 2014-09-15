@@ -1,5 +1,6 @@
 module.exports = (app) ->
   express = require('express')
+  Promise  = require('bluebird')
   router = express.Router()
   Page = require('../models/page')(app)
 
@@ -13,5 +14,18 @@ module.exports = (app) ->
     else
       updatedPages = []
       newPages = []
-      res.render('index', { updatedPages: updatedPages, newPages: newPages })
+      Promise.all([
+        Page.query (qb) =>
+          qb.orderBy('updated_at', 'desc').limit(5)
+        .fetchAll()
+          .then (updatedPages) =>
+            @updatedPages = updatedPages
+        Page.query (qb) =>
+          qb.orderBy('created_at', 'desc').limit(5)
+        .fetchAll()
+          .then (newPages) =>
+            @newPages = newPages
+      ])
+      .then =>
+        res.render('index', { updatedPages: @updatedPages.models, newPages: @newPages.models })
   )
