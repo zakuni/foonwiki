@@ -20,7 +20,7 @@ app = express()
 app.set('bookshelf', bookshelf)
 require('./models/page')(app)
 
-routes = require './routes/index'
+routes = require('./routes/index')(app)
 pages = require('./routes/pages')(app)
 users = require './routes/users'
 
