@@ -15,13 +15,14 @@ knex = require('knex')(
 )
 bookshelf = require('bookshelf')(knex)
 
-routes = require './routes/index'
-pages = require './routes/pages'
-users = require './routes/users'
-
 app = express()
 
 app.set('bookshelf', bookshelf)
+require('./models/page')(app)
+
+routes = require './routes/index'
+pages = require('./routes/pages')(app)
+users = require './routes/users'
 
 # view engine setup
 app.set('views', path.join(__dirname, 'views'))
