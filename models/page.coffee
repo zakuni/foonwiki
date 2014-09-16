@@ -3,4 +3,5 @@ module.exports = (app) ->
 
   Page = bookshelf.Model.extend({
     tableName: 'pages'
+    hasTimestamps: true
   })
