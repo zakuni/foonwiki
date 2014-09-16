@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  div.row
+    div.small-12.column
+      h1 All Pages
+      ul
+        each page in pages
+          li
+            a(href="/?id=#{page.id}") #{page.get("name")}

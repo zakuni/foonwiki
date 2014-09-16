@@ -3,3 +3,8 @@ Godeps/Readme
 /foonwiki
 
 gin-bin
+
+node_modules
+public/.sass-cache/*
+
+npm-debug.log

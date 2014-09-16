@@ -1,1 +1,1 @@
-web: foonwiki
+web: npm start
