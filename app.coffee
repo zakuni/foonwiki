@@ -7,11 +7,7 @@ bodyParser = require 'body-parser'
 
 knex = require('knex')(
   client: 'pg'
-  connection:
-    host : 'localhost'
-    user : 'foon'
-    database : 'foon'
-    charset : 'utf8'
+  connection: process.env.DATABASE_URL
 )
 bookshelf = require('bookshelf')(knex)
 
