@@ -9,17 +9,12 @@ PageApp.commands.setHandler("postContents", function(){
   if($.browser.mozilla || $.browser.opera ||$.browser.msie )
     ce.find("br").replaceWith("\n");
 
-  var fd = new FormData();
-  fd.append("content", ce.text());
-  fd.append("pagename", $("#pagenameinput").val());
-
-  $.ajax({
-    url: $("#contents").attr("action"),
-    type: "POST",
-    data: fd,
-    processData: false,
-    contentType: false
+  page = new Page({
+    name: $("#pagenameinput").val(),
+    content: ce.text()
   });
+  page.url = function(){ return $("#contents").attr("action"); };
+  page.save();
 });
 
 PageApp.addRegions({
@@ -28,6 +23,8 @@ PageApp.addRegions({
 });
 
 var Page = Backbone.Model.extend({
+  urlRoot: '/pages',
+
   initialize: function(){
     this.on("change:name", function(){
       localStorage.setItem("recentPages", JSON.stringify(this));

@@ -23,3 +23,15 @@ module.exports = (app) ->
     page = new Page()
     res.render('page', {page: page})
   )
+
+  router.post('/:id', (req, res) ->
+    page = new Page(req.body)
+    page.id = req.params.id
+    page.save()
+  )
+
+  router.put('/:id', (req, res) ->
+    page = new Page(req.body)
+    page.id = req.params.id
+    page.save()
+  )
