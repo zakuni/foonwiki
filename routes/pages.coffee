@@ -19,6 +19,11 @@ module.exports = (app) ->
             res.render('pages', {pages: pages.models})
   )
 
+  router.post('/', (req, res) ->
+    page = new Page(req.body)
+    page.save()
+  )
+
   router.get('/new', (req, res) ->
     page = new Page()
     res.render('page', {page: page})
