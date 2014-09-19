@@ -1,4 +1,5 @@
 assert  = require 'assert'
+expect  = require('chai').expect
 express = require 'express'
 
 knex = require('knex')(
@@ -11,7 +12,11 @@ app = express()
 app.set('bookshelf', bookshelf)
 
 Page = require('../models/page')(app)
-describe 'Page', ()->
-  it 'should have timestamps', ()->
-    page = new Page()
-    assert.equal(true, page.hasTimestamps)
+
+module.exports =
+  'Page':
+    '#hasTimestamps()':
+      'return true': ()->
+        page = new Page()
+        expect(page.hasTimestamps).to.be.true
+
