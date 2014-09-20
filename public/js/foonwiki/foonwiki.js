@@ -1,5 +1,7 @@
 var PageApp = new Backbone.Marionette.Application();
 
+PageApp.model = new Page();
+
 PageApp.commands.setHandler("postContents", function(){
   var ce = $("<pre />").html($("#content").html());
   if($.browser.webkit)
@@ -9,12 +11,12 @@ PageApp.commands.setHandler("postContents", function(){
   if($.browser.mozilla || $.browser.opera ||$.browser.msie )
     ce.find("br").replaceWith("\n");
 
-  page = new Page({
+  PageApp.model.set({
     name: $("#pagenameinput").val(),
     content: ce.text()
   });
-  page.url = function(){ return $("#contents").attr("action"); };
-  page.save();
+  PageApp.model.url = function(){ return $("#contents").attr("action"); };
+  PageApp.model.save();
 });
 
 PageApp.addRegions({
