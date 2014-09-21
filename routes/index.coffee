@@ -17,13 +17,13 @@ module.exports = (app) ->
         Page.query (qb) =>
           qb.orderBy('updated_at', 'desc').limit(5)
         .fetchAll()
-          .then (updatedPages) =>
-            @updatedPages = updatedPages
+        .then (updatedPages) =>
+          @updatedPages = updatedPages
         Page.query (qb) =>
           qb.orderBy('created_at', 'desc').limit(5)
         .fetchAll()
-          .then (newPages) =>
-            @newPages = newPages
+        .then (newPages) =>
+          @newPages = newPages
       ])
       .then =>
         res.render('index', { updatedPages: @updatedPages.models, newPages: @newPages.models })
