@@ -1,7 +1,6 @@
 module.exports = (app) ->
-  express = require('express')
+  router = require('express').Router()
   Promise  = require('bluebird')
-  router = express.Router()
   Page = require('../models/page')(app)
 
   router.get('/', (req, res) ->

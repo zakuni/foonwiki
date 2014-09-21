@@ -14,7 +14,6 @@ bookshelf = require('bookshelf')(knex)
 app = express()
 
 app.set('bookshelf', bookshelf)
-require('./models/page')(app)
 
 routes = require('./routes/index')(app)
 pages = require('./routes/pages')(app)
