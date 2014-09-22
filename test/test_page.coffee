@@ -16,7 +16,7 @@ Page = require('../models/page')(app)
 module.exports =
   'Page':
     '#hasTimestamps()':
-      'return true': ()->
+      'return true': ->
         page = new Page()
         expect(page.hasTimestamps).to.be.true
 
