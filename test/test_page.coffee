@@ -1,5 +1,4 @@
-assert  = require 'assert'
-expect  = require('chai').expect
+assert  = require 'power-assert'
 express = require 'express'
 
 knex = require('knex')(
@@ -18,5 +17,5 @@ module.exports =
     '#hasTimestamps()':
       'return true': ->
         page = new Page()
-        expect(page.hasTimestamps).to.be.true
-
+        hasTimestamps = page.hasTimestamps
+        assert hasTimestamps
