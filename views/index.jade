@@ -24,7 +24,7 @@ block content
           ul.undotted
             each page in updatedPages
               li
-                a(href="/?id=#{page.id}") #{page.get("name")}
+                a(href="/?id=#{page.id}") !{page.escape("name")}
             br
             li(style="text-align:right")
               a(href="/pages?sortedby=updated") view all&nbsp;
@@ -35,7 +35,7 @@ block content
           ul.undotted
             each page in newPages
               li
-                a(href="/?id=#{page.id}") #{page.get("name")}
+                a(href="/?id=#{page.id}") !{page.escape("name")}
             br
             li(style="text-align:right")
               a(href="/pages?sortedby=created") view all&nbsp;
