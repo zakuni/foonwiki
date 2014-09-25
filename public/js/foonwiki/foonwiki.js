@@ -1,5 +1,17 @@
 var PageApp = new Backbone.Marionette.Application();
 
+var Page = Backbone.Model.extend({
+  urlRoot: '/pages',
+
+  initialize: function(){
+    this.on("change:name", function(){
+      localStorage.setItem("recentPages", JSON.stringify(this));
+    });
+  }
+});
+
+PageApp.model = new Page();
+
 PageApp.commands.setHandler("postContents", function(){
   var ce = $("<pre />").html($("#content").html());
   if($.browser.webkit)
@@ -9,27 +21,17 @@ PageApp.commands.setHandler("postContents", function(){
   if($.browser.mozilla || $.browser.opera ||$.browser.msie )
     ce.find("br").replaceWith("\n");
 
-  page = new Page({
+  PageApp.model.set({
     name: $("#pagenameinput").val(),
     content: ce.text()
   });
-  page.url = function(){ return $("#contents").attr("action"); };
-  page.save();
+  PageApp.model.url = function(){ return $("#contents").attr("action"); };
+  PageApp.model.save();
 });
 
 PageApp.addRegions({
   titleRegion: "#pagetitle",
   contentRegion: "#content"
-});
-
-var Page = Backbone.Model.extend({
-  urlRoot: '/pages',
-
-  initialize: function(){
-    this.on("change:name", function(){
-      localStorage.setItem("recentPages", JSON.stringify(this));
-    });
-  }
 });
 
 $("#pagenameform").submit(function(e){
@@ -96,7 +98,12 @@ var PageContentView = Marionette.ItemView.extend({
 $(function (){
   var recentPage = localStorage.getItem("recentPages");
   if(recentPage !== null){
-    $("#seen ul").append("<li><a href='/?id='>"+JSON.parse(recentPage).name+"</a></li>");
+    $("#seen ul")
+    .append($("<li></li>")
+      .append($("<a></a>")
+        .text(JSON.parse(recentPage).name)
+      )
+    );
   }
 
   PageApp.titleRegion.attachView(new PageNameView({

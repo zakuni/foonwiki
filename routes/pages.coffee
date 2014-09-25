@@ -1,6 +1,5 @@
 module.exports = (app) ->
-  express = require('express')
-  router = express.Router()
+  router = require('express').Router()
   Page = require('../models/page')(app)
 
   # GET pages listing.

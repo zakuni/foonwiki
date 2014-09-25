@@ -1,0 +1,3 @@
+--compilers coffee:coffee-script/register
+--ui exports
+--require espower-coffee/guess
