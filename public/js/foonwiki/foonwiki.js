@@ -36,7 +36,7 @@ PageApp.addRegions({
 
 $("#pagenameform").submit(function(e){
   PageApp.execute("postContents");
-  $("#pagename").text($("#pagenameinput").val());
+  $("#pagename").text(PageApp.model.escape("name"));
   $("#pagename").show();
   $("#pagenameform").hide();
   return false;
@@ -61,8 +61,8 @@ var PageNameView = Marionette.ItemView.extend({
     'click': 'showPageForm'
   },
 
-  modelNameChanged: function(model, value){
-    this.$el.html(value);
+  modelNameChanged: function(model){
+    this.$el.html(model.escape("name"));
   },
 
   showPageForm: function(){
