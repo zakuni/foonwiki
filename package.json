@@ -24,6 +24,8 @@
   "devDependencies": {
     "mocha": "^1.21.4",
     "power-assert": "^0.9.0",
-    "espower-coffee": "^0.9.1"
+    "espower-coffee": "^0.9.1",
+    "gulp": "^3.8.8",
+    "gulp-coffee": "^2.2.0"
   }
 }

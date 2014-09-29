@@ -1,5 +1,4 @@
-(function() {
-  
+`
 var PageApp = new Backbone.Marionette.Application();
 
 var Page = Backbone.Model.extend({
@@ -120,7 +119,4 @@ $(function (){
     pageContentView.focus();
   });
 });
-;
-
-
-}).call(this);
+`
