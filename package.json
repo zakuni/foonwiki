@@ -26,6 +26,8 @@
     "power-assert": "^0.9.0",
     "espower-coffee": "^0.9.1",
     "gulp": "^3.8.8",
-    "gulp-coffee": "^2.2.0"
+    "gulp-coffee": "^2.2.0",
+    "gulp-concat": "^2.4.1",
+    "gulp-order": "^1.1.1"
   }
 }

@@ -1,7 +1,5 @@
 (function() {
   
-var PageApp = new Backbone.Marionette.Application();
-
 var Page = Backbone.Model.extend({
   urlRoot: '/pages',
 
@@ -11,6 +9,9 @@ var Page = Backbone.Model.extend({
     });
   }
 });
+;
+  
+var PageApp = new Backbone.Marionette.Application();
 
 PageApp.model = new Page();
 
