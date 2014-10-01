@@ -3,8 +3,10 @@ order  = require 'gulp-order'
 coffee = require 'gulp-coffee'
 concat = require 'gulp-concat'
 
+path = './public/**/*.coffee'
+
 gulp.task 'coffee', ->
-  gulp.src('./public/**/*.coffee')
+  gulp.src(path)
     .pipe order([
       "**/models/*.coffee",
       "**/foonwiki.coffee"
@@ -13,4 +15,7 @@ gulp.task 'coffee', ->
     .pipe coffee()
     .pipe gulp.dest('./public/js/foonwiki/')
 
-gulp.task 'default', ['coffee']
+gulp.task 'watch', ->
+  gulp.watch path, ['coffee']
+
+gulp.task 'default', ['watch', 'coffee']
