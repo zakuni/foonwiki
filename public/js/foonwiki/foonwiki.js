@@ -109,30 +109,24 @@ var PageContentView = Marionette.ItemView.extend({
     this.$el.focus();
   }
 });
-
-$(function (){
-  var recentPage = localStorage.getItem("recentPages");
-  if(recentPage !== null){
-    $("#seen ul")
-    .append($("<li></li>")
-      .append($("<a></a>")
-        .text(JSON.parse(recentPage).name)
-      )
-    );
-  }
-
-  PageApp.titleRegion.attachView(new PageNameView({
-    model: new Page()
-  }));
-  PageApp.titleRegion.attachView(new PageNameFormView());
-  var pageContentView = new PageContentView();
-  pageContentView.focus();
-  PageApp.contentRegion.attachView(pageContentView);
-
-  $("body").click(function(){
-    pageContentView.focus();
-  });
-});
 ;
+
+  $(function() {
+    var pageContentView, recentPage;
+    recentPage = localStorage.getItem("recentPages");
+    if (recentPage != null) {
+      $("#seen ul").append($("<li></li>")).append($("<a></a>")).text(JSON.parse(recentPage).name);
+    }
+    PageApp.titleRegion.attachView(new PageNameView({
+      model: new Page()
+    }));
+    PageApp.titleRegion.attachView(new PageNameFormView());
+    pageContentView = new PageContentView();
+    pageContentView.focus();
+    PageApp.contentRegion.attachView(pageContentView);
+    return $("body").click(function() {
+      return pageContentView.focus();
+    });
+  });
 
 }).call(this);
