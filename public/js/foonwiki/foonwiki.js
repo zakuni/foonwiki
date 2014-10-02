@@ -1,15 +1,27 @@
 (function() {
-  
-var Page = Backbone.Model.extend({
-  urlRoot: '/pages',
+  var Page,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  initialize: function(){
-    this.on("change:name", function(){
-      localStorage.setItem("recentPages", JSON.stringify(this));
-    });
-  }
-});
-;
+  Page = (function(_super) {
+    __extends(Page, _super);
+
+    function Page() {
+      return Page.__super__.constructor.apply(this, arguments);
+    }
+
+    Page.prototype.urlRoot = '/pages';
+
+    Page.prototype.initialize = function() {
+      return this.on("change:name", function() {
+        return localStorage.setItem("recentPages", JSON.stringify(this));
+      });
+    };
+
+    return Page;
+
+  })(Backbone.Model);
+
   
 var PageApp = new Backbone.Marionette.Application();
 
@@ -122,6 +134,5 @@ $(function (){
   });
 });
 ;
-
 
 }).call(this);

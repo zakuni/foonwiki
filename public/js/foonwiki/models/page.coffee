@@ -1,11 +1,6 @@
-`
-var Page = Backbone.Model.extend({
-  urlRoot: '/pages',
+class Page extends Backbone.Model
+  urlRoot: '/pages'
 
-  initialize: function(){
-    this.on("change:name", function(){
-      localStorage.setItem("recentPages", JSON.stringify(this));
-    });
-  }
-});
-`
+  initialize: ->
+    this.on "change:name", ->
+      localStorage.setItem "recentPages", JSON.stringify(this)
