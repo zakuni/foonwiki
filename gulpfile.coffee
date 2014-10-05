@@ -2,6 +2,7 @@ gulp   = require 'gulp'
 order  = require 'gulp-order'
 coffee = require 'gulp-coffee'
 concat = require 'gulp-concat'
+gutil  = require 'gulp-util'
 sourcemaps = require 'gulp-sourcemaps'
 
 path = './public/**/*.coffee'
@@ -14,7 +15,7 @@ gulp.task 'coffee', ->
     ])
     .pipe sourcemaps.init()
     .pipe concat('foonwiki.coffee')
-    .pipe coffee()
+    .pipe coffee().on('error', gutil.log)
     .pipe sourcemaps.write()
     .pipe gulp.dest('./public/js/foonwiki/')
 
