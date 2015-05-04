@@ -9,3 +9,7 @@ node_modules
 public/.sass-cache/*
 
 npm-debug.log
+
+.DS_Store
+
+*.log
