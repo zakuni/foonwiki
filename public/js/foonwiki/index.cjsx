@@ -1,3 +1,4 @@
+React = require 'react'
 Page = require ('./models/page')
 `
 var PageApp = new Backbone.Marionette.Application();
