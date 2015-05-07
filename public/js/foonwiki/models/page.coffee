@@ -1,4 +1,4 @@
-class Page extends Backbone.Model
+module.exports = class Page extends Backbone.Model
   urlRoot: '/pages'
 
   initialize: ->
