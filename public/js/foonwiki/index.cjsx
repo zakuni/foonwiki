@@ -6,7 +6,7 @@ var PageApp = new Backbone.Marionette.Application();
 PageApp.model = new Page();
 
 PageApp.commands.setHandler("postContents", function(){
-  var ce = $("<pre />").html($("#content").children().first().html());
+  var ce = $("<pre />").html($("#content").children().first().children().first().html());
   if($.browser.webkit)
     ce.find("div").replaceWith(function() { return "\n" + this.innerHTML; });
   if($.browser.msie)
@@ -32,11 +32,6 @@ $("#pagenameform").submit(function(e){
   $("#pagename").text(PageApp.model.escape("name"));
   $("#pagename").show();
   $("#pagenameform").hide();
-  return false;
-});
-
-$("#contents").submit(function(e){
-  PageApp.execute("postContents");
   return false;
 });
 
@@ -123,9 +118,26 @@ PageContent = React.createClass(
   getInitialState: ->
     {content: page.content}
   render: ->
+    style = {
+      whiteSpace: 'pre'
+      marginBottom: '20px'
+    }
     return (
-      <div>{this.state.content}</div>
+      <div>
+        <div style={style}>{this.state.content}</div>
+        <PageForm />
+      </div>
     )
+)
+
+PageForm = React.createClass(
+  handleSubmit: (e) ->
+    e.preventDefault()
+    PageApp.execute("postContents")
+  render: ->
+    <form id="contents" action={if page.id then "/pages/#{page.id}" else "/pages/"} method="POST" onSubmit={this.handleSubmit}>
+      <input type="submit" value="save" />
+    </form>
 )
 
 React.render(
