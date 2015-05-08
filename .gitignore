@@ -15,3 +15,5 @@ npm-debug.log
 *.log
 
 bower_components
+
+public/js/foonwiki/bundle.js
