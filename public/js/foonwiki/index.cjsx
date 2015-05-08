@@ -6,7 +6,7 @@ var PageApp = new Backbone.Marionette.Application();
 PageApp.model = new Page();
 
 PageApp.commands.setHandler("postContents", function(){
-  var ce = $("<pre />").html($("#content").html());
+  var ce = $("<pre />").html($("#content").children().first().html());
   if($.browser.webkit)
     ce.find("div").replaceWith(function() { return "\n" + this.innerHTML; });
   if($.browser.msie)
@@ -107,3 +107,28 @@ $ ->
 
   $("body").click ->
     pageContentView.focus()
+
+PageTitle = React.createClass(
+  getInitialState: ->
+    {title: page.name}
+  render: ->
+    return (
+      <h3 className="pageTitle border-dotted cursor-text">
+        {this.state.title}
+      </h3>
+    )
+)
+
+PageContent = React.createClass(
+  getInitialState: ->
+    {content: page.content}
+  render: ->
+    return (
+      <div>{this.state.content}</div>
+    )
+)
+
+React.render(
+  <PageContent />,
+  document.getElementById('content')
+)
