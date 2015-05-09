@@ -122,7 +122,7 @@ PageContent = React.createClass(
       marginBottom: '20px'
     }
     return (
-      <div>
+      <div className="small-12 column">
         <div className="editable cursor-text" contentEditable="true" style={style} ref="content">{this.state.content}</div>
         <PageForm onPageSubmit={@handlePageSubmit} />
       </div>
