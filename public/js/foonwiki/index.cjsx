@@ -5,23 +5,6 @@ var PageApp = new Backbone.Marionette.Application();
 
 PageApp.model = new Page();
 
-PageApp.commands.setHandler("postContents", function(){
-  var ce = $("<pre />").html($("#content").children().first().children().first().html());
-  if($.browser.webkit)
-    ce.find("div").replaceWith(function() { return "\n" + this.innerHTML; });
-  if($.browser.msie)
-    ce.find("p").replaceWith(function() { return this.innerHTML + "<br>"; });
-  if($.browser.mozilla || $.browser.opera ||$.browser.msie )
-    ce.find("br").replaceWith("\n");
-
-  PageApp.model.set({
-    name: $("#pagenameinput").val(),
-    content: ce.text()
-  });
-  PageApp.model.url = function(){ return $("#contents").attr("action"); };
-  PageApp.model.save();
-});
-
 PageApp.addRegions({
   titleRegion: "#pagetitle",
   contentRegion: "#content"
@@ -133,7 +116,20 @@ PageContent = React.createClass(
 PageForm = React.createClass(
   handleSubmit: (e) ->
     e.preventDefault()
-    PageApp.execute("postContents")
+    ce = $("<pre />").html($("#content").children().first().children().first().html())
+    if($.browser.webkit)
+      ce.find("div").replaceWith(()-> return "\n" + this.innerHTML)
+    if($.browser.msie)
+      ce.find("p").replaceWith(()-> return this.innerHTML + "<br>")
+    if($.browser.mozilla || $.browser.opera ||$.browser.msie )
+      ce.find("br").replaceWith("\n")
+
+    PageApp.model.set({
+      name: $("#pagenameinput").val(),
+      content: ce.text()
+    })
+    PageApp.model.url = ()-> return $("#contents").attr("action")
+    PageApp.model.save()
   render: ->
     <form id="contents" action={if page.id then "/pages/#{page.id}" else "/pages/"} method="POST" onSubmit={this.handleSubmit}>
       <input type="submit" value="save" />
