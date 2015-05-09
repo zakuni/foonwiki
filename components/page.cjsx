@@ -80,6 +80,22 @@ $ ->
     model: new Page()
   ))
 
+App = React.createClass(
+  render: ->
+    <div>
+      <div className="row">
+        <div className="small-12 column">
+          <section id="pagetitle" className="pagetitle">
+            <PageTitle />
+          </section>
+        </div>
+      </div>
+      <div className="row">
+        <PageContent />
+      </div>
+    </div>
+)
+
 PageTitle = React.createClass(
   getInitialState: ->
     {title: page.name}
