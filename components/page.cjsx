@@ -160,4 +160,4 @@ PageForm = React.createClass(
     </form>
 )
 
-module.exports = PageContent
+module.exports = App

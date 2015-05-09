@@ -1,7 +1,7 @@
 React = require 'react'
-PageContent = require './page'
+PageApp = require './page'
 
 React.render(
-  <PageContent />,
-  document.getElementById('content')
+  <PageApp />,
+  document.getElementById('pageapp')
 )
