@@ -81,11 +81,29 @@ $ ->
   ))
 
 App = React.createClass(
+  handlePageSubmit: ->
+    ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
+    if($.browser.webkit)
+      ce.find("div").replaceWith(()-> return "\n" + this.innerHTML)
+    if($.browser.msie)
+      ce.find("p").replaceWith(()-> return this.innerHTML + "<br>")
+    if($.browser.mozilla || $.browser.opera ||$.browser.msie )
+      ce.find("br").replaceWith("\n")
+
+    PageApp.model.set({
+      name: $("#pagenameinput").val(),
+      content: ce.text()
+    })
+    PageApp.model.url = ()-> return $("#contents").attr("action")
+    PageApp.model.save()
   render: ->
     <div>
       <PageTitle />
       <div className="row">
-        <PageContent />
+        <div className="small-12 column">
+          <PageContent ref="content" />
+          <PageForm onPageSubmit={@handlePageSubmit} />
+        </div>
       </div>
     </div>
 )
@@ -119,32 +137,14 @@ PageContent = React.createClass(
   componentWillUnmount: ->
     document.body.removeEventListener('click', @focus)
   focus: ->
-    @refs.content.getDOMNode().focus()
-  handlePageSubmit: ->
-    ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
-    if($.browser.webkit)
-      ce.find("div").replaceWith(()-> return "\n" + this.innerHTML)
-    if($.browser.msie)
-      ce.find("p").replaceWith(()-> return this.innerHTML + "<br>")
-    if($.browser.mozilla || $.browser.opera ||$.browser.msie )
-      ce.find("br").replaceWith("\n")
-
-    PageApp.model.set({
-      name: $("#pagenameinput").val(),
-      content: ce.text()
-    })
-    PageApp.model.url = ()-> return $("#contents").attr("action")
-    PageApp.model.save()
+    @refs.editable.getDOMNode().focus()
   render: ->
     style = {
       whiteSpace: 'pre'
       marginBottom: '20px'
     }
     return (
-      <div className="small-12 column">
-        <div className="editable cursor-text" contentEditable="true" style={style} ref="content">{this.state.content}</div>
-        <PageForm onPageSubmit={@handlePageSubmit} />
-      </div>
+      <div className="editable cursor-text" contentEditable="true" style={style} ref="editable">{this.state.content}</div>
     )
 )
 
