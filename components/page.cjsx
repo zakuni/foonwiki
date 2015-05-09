@@ -106,7 +106,7 @@ PageContent = React.createClass(
       marginBottom: '20px'
     }
     return (
-      <div>
+      <div className="editable cursor-text" contentEditable="true">
         <div style={style}>{this.state.content}</div>
         <PageForm />
       </div>
