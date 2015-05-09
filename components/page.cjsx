@@ -97,7 +97,7 @@ PageContent = React.createClass(
   componentDidMount: ->
     @focus()
     document.body.addEventListener('click', @focus)
-  componentWillUnmount
+  componentWillUnmount: ->
     document.body.removeEventListener('click', @focus)
   focus: ->
     @refs.content.getDOMNode().focus()
