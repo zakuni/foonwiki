@@ -98,6 +98,8 @@ PageTitle = React.createClass(
 )
 
 PageContent = React.createClass(
+  getInitialState: ->
+    {content: page.content}
   handlePageSubmit: ->
     ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
     if($.browser.webkit)
@@ -113,8 +115,6 @@ PageContent = React.createClass(
     })
     PageApp.model.url = ()-> return $("#contents").attr("action")
     PageApp.model.save()
-  getInitialState: ->
-    {content: page.content}
   render: ->
     style = {
       whiteSpace: 'pre'
