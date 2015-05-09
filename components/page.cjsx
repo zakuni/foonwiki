@@ -66,12 +66,6 @@ var PageNameView = Marionette.ItemView.extend({
     }, 0);
   }
 });
-
-var PageNameFormView = Marionette.ItemView.extend({
-  el: '#pagenameform',
-
-  template: false
-});
 `
 
 $ ->
@@ -85,7 +79,6 @@ $ ->
   PageApp.titleRegion.attachView(new PageNameView(
     model: new Page()
   ))
-  PageApp.titleRegion.attachView(new PageNameFormView())
 
 PageTitle = React.createClass(
   getInitialState: ->
