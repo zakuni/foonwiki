@@ -83,13 +83,7 @@ $ ->
 App = React.createClass(
   render: ->
     <div>
-      <div className="row">
-        <div className="small-12 column">
-          <section id="pagetitle" className="pagetitle">
-            <PageTitle />
-          </section>
-        </div>
-      </div>
+      <PageTitle />
       <div className="row">
         <PageContent />
       </div>
@@ -101,13 +95,17 @@ PageTitle = React.createClass(
     {title: page.name}
   render: ->
     return (
-      <div>
-        <h3 className="pageTitle border-dotted cursor-text" placeholder="no title">
-          {this.state.title}
-        </h3>
-        <form id="pagenameform" className="pagename hide">
-          <input id="pagenameinput" className="border-dotted" type="text" placeholder="no title" defaultValue={this.state.title} />
-        </form>
+      <div className="row">
+        <div className="small-12 column">
+          <section id="pagetitle" className="pagetitle">
+            <h3 id="pagename" className="pageTitle border-dotted cursor-text" placeholder="no title">
+              {this.state.title}
+            </h3>
+            <form id="pagenameform" className="pagename hide">
+              <input id="pagenameinput" className="border-dotted" type="text" placeholder="no title" defaultValue={this.state.title} />
+            </form>
+          </section>
+        </div>
       </div>
     )
 )
