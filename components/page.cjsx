@@ -80,7 +80,6 @@ $ ->
   ))
   PageApp.titleRegion.attachView(new PageNameFormView())
   pageContentView = new PageContentView()
-  pageContentView.focus()
   PageApp.contentRegion.attachView(pageContentView)
 
   $("body").click ->
@@ -100,6 +99,8 @@ PageTitle = React.createClass(
 PageContent = React.createClass(
   getInitialState: ->
     {content: page.content}
+  componentDidMount: ->
+    @refs.content.getDOMNode().focus()
   handlePageSubmit: ->
     ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
     if($.browser.webkit)
