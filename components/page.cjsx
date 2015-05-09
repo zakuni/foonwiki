@@ -99,7 +99,7 @@ PageTitle = React.createClass(
 
 PageContent = React.createClass(
   handlePageSubmit: ->
-    ce = $("<pre />").html($("#content").children().first().children().first().html())
+    ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
     if($.browser.webkit)
       ce.find("div").replaceWith(()-> return "\n" + this.innerHTML)
     if($.browser.msie)
@@ -121,8 +121,8 @@ PageContent = React.createClass(
       marginBottom: '20px'
     }
     return (
-      <div className="editable cursor-text" contentEditable="true">
-        <div style={style}>{this.state.content}</div>
+      <div>
+        <div className="editable cursor-text" contentEditable="true" style={style} ref="content">{this.state.content}</div>
         <PageForm onPageSubmit={@handlePageSubmit} />
       </div>
     )
