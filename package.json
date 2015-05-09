@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "mocha",
-    "build": "browserify -t coffee-reactify -t debowerify --extension='.cjsx' --extension='.coffee' public/js/foonwiki/index.cjsx -o public/js/bundle.js",
-    "watch": "watchify -t coffee-reactify -t debowerify -d --extension='.cjsx' --extension='.coffee' public/js/foonwiki/index.cjsx -o public/js/bundle.js -v",
+    "build": "browserify -t coffee-reactify -t debowerify --extension='.cjsx' --extension='.coffee' components/index.cjsx -o public/js/bundle.js",
+    "watch": "watchify -t coffee-reactify -t debowerify -d --extension='.cjsx' --extension='.coffee' components/index.cjsx -o public/js/bundle.js -v",
     "post-install": "bower install && npm run build"
   },
   "dependencies": {
