@@ -4,7 +4,24 @@ Page = require ('./models/page')
 var PageApp = new Backbone.Marionette.Application();
 
 PageApp.model = new Page();
+`
+PageApp.commands.setHandler("postContents", () ->
+  ce = $("<pre />").html($("#content").children().first().children().first().html())
+  if($.browser.webkit)
+    ce.find("div").replaceWith(() -> return "\n" + this.innerHTML)
+  if($.browser.msie)
+    ce.find("p").replaceWith(() -> return this.innerHTML + "<br>")
+  if($.browser.mozilla || $.browser.opera ||$.browser.msie )
+    ce.find("br").replaceWith("\n")
 
+  PageApp.model.set({
+    name: $("#pagenameinput").val()
+    content: ce.text()
+  })
+  PageApp.model.url = () -> return $("#contents").attr("action")
+  PageApp.model.save()
+)
+`
 PageApp.addRegions({
   titleRegion: "#pagetitle",
   contentRegion: "#content"
