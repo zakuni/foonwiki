@@ -98,24 +98,7 @@ PageTitle = React.createClass(
 )
 
 PageContent = React.createClass(
-  getInitialState: ->
-    {content: page.content}
-  render: ->
-    style = {
-      whiteSpace: 'pre'
-      marginBottom: '20px'
-    }
-    return (
-      <div className="editable cursor-text" contentEditable="true">
-        <div style={style}>{this.state.content}</div>
-        <PageForm />
-      </div>
-    )
-)
-
-PageForm = React.createClass(
-  handleSubmit: (e) ->
-    e.preventDefault()
+  handlePageSubmit: ->
     ce = $("<pre />").html($("#content").children().first().children().first().html())
     if($.browser.webkit)
       ce.find("div").replaceWith(()-> return "\n" + this.innerHTML)
@@ -130,8 +113,29 @@ PageForm = React.createClass(
     })
     PageApp.model.url = ()-> return $("#contents").attr("action")
     PageApp.model.save()
+  getInitialState: ->
+    {content: page.content}
   render: ->
-    <form id="contents" action={if page.id then "/pages/#{page.id}" else "/pages/"} method="POST" onSubmit={this.handleSubmit}>
+    style = {
+      whiteSpace: 'pre'
+      marginBottom: '20px'
+    }
+    return (
+      <div className="editable cursor-text" contentEditable="true">
+        <div style={style}>{this.state.content}</div>
+        <PageForm onPageSubmit={@handlePageSubmit} />
+      </div>
+    )
+)
+
+PageForm = React.createClass(
+  propTypes:
+    onPageSubmit: React.PropTypes.func.isRequired
+  handleSubmit: (e) ->
+    e.preventDefault()
+    @props.onPageSubmit()
+  render: ->
+    <form id="contents" action={if page.id then "/pages/#{page.id}" else "/pages/"} method="POST" onSubmit={@handleSubmit}>
       <input type="submit" value="save" />
     </form>
 )
