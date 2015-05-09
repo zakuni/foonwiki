@@ -55,16 +55,6 @@ var PageNameFormView = Marionette.ItemView.extend({
 
   template: false
 });
-
-var PageContentView = Marionette.ItemView.extend({
-  el: '#content',
-
-  template: false,
-
-  focus: function() {
-    this.$el.focus();
-  }
-});
 `
 
 $ ->
@@ -79,11 +69,6 @@ $ ->
     model: new Page()
   ))
   PageApp.titleRegion.attachView(new PageNameFormView())
-  pageContentView = new PageContentView()
-  PageApp.contentRegion.attachView(pageContentView)
-
-  $("body").click ->
-    pageContentView.focus()
 
 PageTitle = React.createClass(
   getInitialState: ->
@@ -100,6 +85,9 @@ PageContent = React.createClass(
   getInitialState: ->
     {content: page.content}
   componentDidMount: ->
+    @focus()
+    document.body.addEventListener('click', @focus)
+  focus: ->
     @refs.content.getDOMNode().focus()
   handlePageSubmit: ->
     ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
