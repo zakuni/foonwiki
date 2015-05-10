@@ -67,7 +67,7 @@ PageTitle = React.createClass(
       focus: false
     }
   toggleFocus: (e) ->
-    @setState({focus: !@state.focus}, -> @refs.input.getDOMNode().focus())
+    @setState({focus: !@state.focus}, -> React.findDOMNode(@refs.input).focus())
   changeTitle: (e) ->
     @setState({title: event.target.value}, -> @props.onTitleSubmit(@state.title))
   handleSubmit: (e) ->
@@ -96,7 +96,7 @@ PageContent = React.createClass(
   componentDidMount: ->
     @focus()
   focus: ->
-    @refs.editable.getDOMNode().focus()
+    React.findDOMNode(@refs.editable).focus()
   render: ->
     style = {
       whiteSpace: 'pre'
