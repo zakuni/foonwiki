@@ -5,68 +5,6 @@ var PageApp = new Backbone.Marionette.Application();
 
 PageApp.model = new Page();
 `
-PageApp.commands.setHandler("postContents", () ->
-  ce = $("<pre />").html($("#content").children().first().children().first().html())
-  if($.browser.webkit)
-    ce.find("div").replaceWith(() -> return "\n" + this.innerHTML)
-  if($.browser.msie)
-    ce.find("p").replaceWith(() -> return this.innerHTML + "<br>")
-  if($.browser.mozilla || $.browser.opera ||$.browser.msie )
-    ce.find("br").replaceWith("\n")
-
-  PageApp.model.set({
-    name: $("#pagenameinput").val()
-    content: ce.text()
-  })
-  PageApp.model.url = () -> return $("#contents").attr("action")
-  PageApp.model.save()
-)
-`
-PageApp.addRegions({
-  titleRegion: "#pagetitle",
-  contentRegion: "#content"
-});
-
-$("#pagenameform").submit(function(e){
-  PageApp.execute("postContents");
-  $("#pagename").text(PageApp.model.escape("name"));
-  $("#pagename").show();
-  $("#pagenameform").hide();
-  return false;
-});
-
-var PageNameView = Marionette.ItemView.extend({
-  el: '#pagename',
-
-  template: false,
-
-  initialize: function(){
-    this.model.set("name", $("#pagenameinput").val());
-    this.listenTo(this.model, "change:name", this.modelNameChanged);
-  },
-
-  events: {
-    'click': 'showPageForm'
-  },
-
-  modelNameChanged: function(model){
-    this.$el.html(model.escape("name"));
-  },
-
-  showPageForm: function(){
-    this.$el.hide();
-    var that = this;
-    $("#pagenameform").show().focusout(function(){
-      that.model.set("name", $("#pagenameinput").val());
-      $("#pagenameform").hide();
-      that.$el.show();
-    }).click(function(){ return false; });
-    setTimeout(function(){
-      $("#pagenameinput").focus();
-    }, 0);
-  }
-});
-`
 
 $ ->
   recentPage = localStorage.getItem("recentPages")
@@ -76,11 +14,19 @@ $ ->
       .append $("<a></a>")
       .text(JSON.parse(recentPage).name)
 
-  PageApp.titleRegion.attachView(new PageNameView(
-    model: new Page()
-  ))
-
 App = React.createClass(
+  getInitialState: ->
+    {
+      title: page.name
+      content: page.content
+    }
+  submitPage: ->
+    PageApp.model.set({
+      name: @state.title
+      content: @state.content
+    })
+    PageApp.model.url = ()-> return $("#contents").attr("action")
+    PageApp.model.save()
   handlePageSubmit: ->
     ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
     if($.browser.webkit)
@@ -90,15 +36,18 @@ App = React.createClass(
     if($.browser.mozilla || $.browser.opera ||$.browser.msie )
       ce.find("br").replaceWith("\n")
 
-    PageApp.model.set({
-      name: $("#pagenameinput").val(),
-      content: ce.text()
-    })
-    PageApp.model.url = ()-> return $("#contents").attr("action")
-    PageApp.model.save()
+    @setState({content: ce.text()}, -> @submitPage())
+  handleTitleChange: (title) ->
+    @setState({title: title})
+  handleTitleSubmit: (title) ->
+    @setState({title: title}, -> @submitPage())
   render: ->
     <div>
-      <PageTitle />
+      <div className="row">
+        <div className="small-12 column">
+          <PageTitle onTitleChange={@handleTitleChange} onTitleSubmit={@handleTitleSubmit} />
+        </div>
+      </div>
       <div className="row">
         <div className="small-12 column">
           <PageContent ref="content" />
@@ -109,22 +58,35 @@ App = React.createClass(
 )
 
 PageTitle = React.createClass(
+  propTypes:
+    onTitleChange: React.PropTypes.func.isRequired
+    onTitleSubmit: React.PropTypes.func.isRequired
   getInitialState: ->
-    {title: page.name}
+    {
+      title: page.name
+      focus: false
+    }
+  toggleFocus: (e) ->
+    @setState({focus: !@state.focus}, -> @refs.input.getDOMNode().focus())
+  changeTitle: (e) ->
+    @setState({title: event.target.value}, -> @props.onTitleSubmit(@state.title))
+  handleSubmit: (e) ->
+    e.preventDefault()
+    @props.onTitleSubmit(@state.title)
   render: ->
+    pageTitleElem =
+      if @state.focus
+        <form id="pagenameform" className="pagename" onSubmit={@handleSubmit}>
+          <input id="pagenameinput" className="border-dotted" type="text" placeholder="no title" value={@state.title} onChange={@changeTitle} onBlur={@toggleFocus} ref="input" />
+        </form>
+      else
+        <h3 id="pagename" className="pageTitle border-dotted cursor-text" placeholder="no title" onClick={@toggleFocus}>
+          {@state.title}
+        </h3>
     return (
-      <div className="row">
-        <div className="small-12 column">
-          <section id="pagetitle" className="pagetitle">
-            <h3 id="pagename" className="pageTitle border-dotted cursor-text" placeholder="no title">
-              {this.state.title}
-            </h3>
-            <form id="pagenameform" className="pagename hide">
-              <input id="pagenameinput" className="border-dotted" type="text" placeholder="no title" defaultValue={this.state.title} />
-            </form>
-          </section>
-        </div>
-      </div>
+      <section id="pagetitle" className="pagetitle">
+        {pageTitleElem}
+      </section>
     )
 )
 
@@ -133,9 +95,6 @@ PageContent = React.createClass(
     {content: page.content}
   componentDidMount: ->
     @focus()
-    document.body.addEventListener('click', @focus)
-  componentWillUnmount: ->
-    document.body.removeEventListener('click', @focus)
   focus: ->
     @refs.editable.getDOMNode().focus()
   render: ->
