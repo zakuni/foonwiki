@@ -1,3 +1,5 @@
+debug = require('debug')('page')
+inspect = require('object-inspect')
 React = require 'react'
 Page = require ('./models/page')
 `
@@ -26,6 +28,7 @@ App = React.createClass(
       content: @state.content
     })
     PageApp.model.url = ()-> return $("#contents").attr("action")
+    debug('submit %s', inspect(@state, {colors: true}))
     PageApp.model.save()
   handlePageSubmit: ->
     ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
