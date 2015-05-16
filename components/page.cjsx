@@ -1,5 +1,6 @@
 debug = require('debug')('page')
 inspect = require('object-inspect')
+request = require('superagent')
 React = require 'react'
 Page = require ('./models/page')
 `
@@ -27,9 +28,11 @@ App = React.createClass(
       name: @state.title
       content: @state.content
     })
-    PageApp.model.url = ()-> return $("#contents").attr("action")
+    path = ()-> return $("#contents").attr("action")
     debug('submit %s', inspect(@state, {colors: true}))
-    PageApp.model.save()
+    request
+      .post(path)
+      .send({@state.title, @state.content)
   handlePageSubmit: ->
     ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
     if($.browser.webkit)

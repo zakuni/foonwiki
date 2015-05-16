@@ -28,7 +28,8 @@
     "object-inspect": "^1.0.0",
     "pg": "^4.3.0",
     "react": "^0.13.3",
-    "serve-favicon": "~2.2.0"
+    "serve-favicon": "~2.2.0",
+    "superagent": "^1.2.0"
   },
   "devDependencies": {
     "coffee-reactify": "^3.0.0",
