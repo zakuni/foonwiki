@@ -2,7 +2,6 @@ debug = require('debug')('page')
 inspect = require('object-inspect')
 request = require('superagent')
 React = require 'react'
-Page = require ('./models/page')
 
 $ ->
   recentPage = localStorage.getItem("recentPages")
