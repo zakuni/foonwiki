@@ -7,7 +7,7 @@
     "test": "mocha",
     "build": "browserify -t coffee-reactify -t debowerify --extension='.cjsx' --extension='.coffee' components/index.cjsx -o public/js/bundle.js",
     "watch": "watchify -t coffee-reactify -t debowerify -d --extension='.cjsx' --extension='.coffee' components/index.cjsx -o public/js/bundle.js -v",
-    "post-install": "bower install && npm run build"
+    "postinstall": "bower install && npm run build"
   },
   "dependencies": {
     "bluebird": "^2.9.25",
