@@ -3,11 +3,6 @@ inspect = require('object-inspect')
 request = require('superagent')
 React = require 'react'
 Page = require ('./models/page')
-`
-var PageApp = new Backbone.Marionette.Application();
-
-PageApp.model = new Page();
-`
 
 $ ->
   recentPage = localStorage.getItem("recentPages")
@@ -24,10 +19,6 @@ App = React.createClass(
       content: page.content
     }
   submitPage: ->
-    PageApp.model.set({
-      name: @state.title
-      content: @state.content
-    })
     path = $("#contents").attr("action")
     debug('submit to %s %s', path, inspect(@state, {colors: true}))
     request
@@ -45,6 +36,7 @@ App = React.createClass(
 
     @setState({content: ce.text()}, -> @submitPage())
   handleTitleChange: (title) ->
+    localStorage.setItem "recentPages", JSON.stringify(this)
     @setState({title: title})
   handleTitleSubmit: (title) ->
     @setState({title: title}, -> @submitPage())
