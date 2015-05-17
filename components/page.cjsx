@@ -28,11 +28,12 @@ App = React.createClass(
       name: @state.title
       content: @state.content
     })
-    path = ()-> return $("#contents").attr("action")
-    debug('submit %s', inspect(@state, {colors: true}))
+    path = $("#contents").attr("action")
+    debug('submit to %s %s', path, inspect(@state, {colors: true}))
     request
       .post(path)
-      .send({@state.title, @state.content)
+      .send({name: @state.title, content: @state.content})
+      .end((err, res) -> debug('%s %s', err, res))
   handlePageSubmit: ->
     ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
     if($.browser.webkit)
