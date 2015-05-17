@@ -25,7 +25,9 @@ module.exports = (app) ->
 
   router.get('/new', (req, res) ->
     page = new Page()
-    res.render('page', {page: page})
+    page.save()
+      .then (page) ->
+        res.render('page', {page: page})
   )
 
   router.post('/:id', (req, res) ->

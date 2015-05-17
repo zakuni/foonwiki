@@ -21,7 +21,7 @@ App = React.createClass(
     path = $("#contents").attr("action")
     debug('submit to %s %s', path, inspect(@state, {colors: true}))
     request
-      .post(path)
+      .put(path)
       .send({name: @state.title, content: @state.content})
       .end((err, res) -> debug('%s %s', err, res))
   handlePageSubmit: ->
@@ -112,7 +112,7 @@ PageForm = React.createClass(
     e.preventDefault()
     @props.onPageSubmit()
   render: ->
-    <form id="contents" action={if page.id then "/pages/#{page.id}" else "/pages/"} method="POST" onSubmit={@handleSubmit}>
+    <form id="contents" action={if page.id then "/pages/#{page.id}" else "/pages/"} method="PUT" onSubmit={@handleSubmit}>
       <input type="submit" value="save" />
     </form>
 )
