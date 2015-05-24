@@ -48,7 +48,7 @@ App = React.createClass(
       </div>
       <div className="row">
         <div className="small-12 column">
-          <PageContent ref="content" />
+          <PageContent ref="content" onContentChange={@handlePageSubmit} />
           <PageForm onPageSubmit={@handlePageSubmit} />
         </div>
       </div>
@@ -89,19 +89,23 @@ PageTitle = React.createClass(
 )
 
 PageContent = React.createClass(
+  propTypes:
+    onContentChange: React.PropTypes.func.isRequired
   getInitialState: ->
     {content: page.content}
   componentDidMount: ->
     @focus()
   focus: ->
     React.findDOMNode(@refs.editable).focus()
+  changeContent: ->
+    @props.onContentChange()
   render: ->
     style = {
       whiteSpace: 'pre'
       marginBottom: '20px'
     }
     return (
-      <div className="editable cursor-text" contentEditable="true" style={style} ref="editable">{this.state.content}</div>
+      <div className="editable cursor-text" contentEditable="true" style={style} ref="editable" onInput={@changeContent}>{this.state.content}</div>
     )
 )
 
@@ -112,9 +116,7 @@ PageForm = React.createClass(
     e.preventDefault()
     @props.onPageSubmit()
   render: ->
-    <form id="contents" action={if page.id then "/pages/#{page.id}" else "/pages/"} method="PUT" onSubmit={@handleSubmit}>
-      <input type="submit" value="save" />
-    </form>
+    <form id="contents" action={if page.id then "/pages/#{page.id}" else "/pages/"} method="PUT" onSubmit={@handleSubmit}></form>
 )
 
 module.exports = App
