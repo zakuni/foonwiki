@@ -3,19 +3,13 @@ inspect = require('object-inspect')
 request = require('superagent')
 React = require 'react'
 
-$ ->
-  recentPage = localStorage.getItem("recentPages")
-  if recentPage?
-    $("#seen ul")
-      .append $("<li></li>")
-      .append $("<a></a>")
-      .text(JSON.parse(recentPage).name)
-
 App = React.createClass(
   getInitialState: ->
+    title = @props.title or page.name
+    content = @props.content or page.content
     {
-      title: page.name
-      content: page.content
+      title: title
+      content: content
     }
   submitPage: ->
     path = $("#contents").attr("action")
@@ -43,13 +37,13 @@ App = React.createClass(
     <div>
       <div className="row">
         <div className="small-12 column">
-          <PageTitle onTitleChange={@handleTitleChange} onTitleSubmit={@handleTitleSubmit} />
+          <PageTitle onTitleChange={@handleTitleChange} onTitleSubmit={@handleTitleSubmit} title=@state.title />
         </div>
       </div>
       <div className="row">
         <div className="small-12 column">
-          <PageContent ref="content" onContentChange={@handlePageSubmit} />
-          <PageForm onPageSubmit={@handlePageSubmit} />
+          <PageContent ref="content" onContentChange={@handlePageSubmit} content=@state.content />
+          <PageForm onPageSubmit={@handlePageSubmit} pageId=@props.pageId />
         </div>
       </div>
     </div>
@@ -57,11 +51,12 @@ App = React.createClass(
 
 PageTitle = React.createClass(
   propTypes:
+    title: React.PropTypes.string
     onTitleChange: React.PropTypes.func.isRequired
     onTitleSubmit: React.PropTypes.func.isRequired
   getInitialState: ->
     {
-      title: page.name
+      title: @props.title
       focus: false
     }
   toggleFocus: (e) ->
@@ -90,9 +85,10 @@ PageTitle = React.createClass(
 
 PageContent = React.createClass(
   propTypes:
+    content: React.PropTypes.string.isRequired
     onContentChange: React.PropTypes.func.isRequired
   getInitialState: ->
-    {content: page.content}
+    {content: @props.content}
   componentDidMount: ->
     @focus()
   focus: ->
@@ -111,12 +107,14 @@ PageContent = React.createClass(
 
 PageForm = React.createClass(
   propTypes:
+    pageId: React.PropTypes.string
     onPageSubmit: React.PropTypes.func.isRequired
   handleSubmit: (e) ->
     e.preventDefault()
     @props.onPageSubmit()
   render: ->
-    <form id="contents" action={if page.id then "/pages/#{page.id}" else "/pages/"} method="PUT" onSubmit={@handleSubmit}></form>
+    pageId = @props.pageId or page.id
+    <form id="contents" action={if pageId then "/pages/#{pageId}" else "/pages/"} method="PUT" onSubmit={@handleSubmit}></form>
 )
 
 module.exports = App

@@ -3,13 +3,24 @@ module.exports = (app) ->
   Promise  = require('bluebird')
   Page = require('../models/page')(app)
 
+  React = require 'react'
+  require('coffee-react/register')
+  PageApp = require('../components/page.cjsx')
+
   router.get('/', (req, res) ->
     id = req.query.id
     if id?
       new Page({'id': id})
         .fetch()
         .then (page) ->
-          res.render('page', {page: page})
+          res.render('page', {
+            page: page,
+            pageapp: React.renderToString(
+              React.createElement(PageApp, {
+                title: page.get("name"), content: page.get("content"), pageId: page.id
+              })
+            )
+          })
     else
       updatedPages = []
       newPages = []

@@ -2,10 +2,4 @@ extends layout
 
 block content
   #pageapp
-    .row
-      .small-12.columns
-        section#pagetitle.pagetitle
-          h3#pagename.border-dotted.cursor-text(placeholder="no title") #{page.get("name")}
-          form#pagenameform.pagename.hide
-            input#pagenameinput.border-dotted(type="text", placeholder="no title", value=page.get("name"))
-    #content.row
+    != pageapp
