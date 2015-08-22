@@ -27,12 +27,18 @@ App = React.createClass
     if($.browser.mozilla || $.browser.opera ||$.browser.msie )
       ce.find("br").replaceWith("\n")
 
-    @setState({content: ce.text()}, -> @submitPage())
+    @setState({content: ce.text()}, ->
+      clearTimeout(@timeout)
+      @timeout = setTimeout(@submitPage, 500)
+    )
   handleTitleChange: (title) ->
     localStorage.setItem "recentPages", JSON.stringify(this)
     @setState({title: title})
   handleTitleSubmit: (title) ->
-    @setState({title: title}, -> @submitPage())
+    @setState({content: ce.text()}, ->
+      clearTimeout(@timeout)
+      @timeout = setTimeout(@submitPage, 500)
+    )
   render: ->
     <div>
       <div className="row">
