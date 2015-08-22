@@ -3,7 +3,7 @@ inspect = require('object-inspect')
 request = require('superagent')
 React = require 'react'
 
-App = React.createClass(
+App = React.createClass
   getInitialState: ->
     title = @props.title or page.name
     content = @props.content or page.content
@@ -27,12 +27,18 @@ App = React.createClass(
     if($.browser.mozilla || $.browser.opera ||$.browser.msie )
       ce.find("br").replaceWith("\n")
 
-    @setState({content: ce.text()}, -> @submitPage())
+    @setState({content: ce.text()}, ->
+      clearTimeout(@timeout)
+      @timeout = setTimeout(@submitPage, 500)
+    )
   handleTitleChange: (title) ->
     localStorage.setItem "recentPages", JSON.stringify(this)
     @setState({title: title})
   handleTitleSubmit: (title) ->
-    @setState({title: title}, -> @submitPage())
+    @setState({content: ce.text()}, ->
+      clearTimeout(@timeout)
+      @timeout = setTimeout(@submitPage, 500)
+    )
   render: ->
     <div>
       <div className="row">
@@ -47,9 +53,8 @@ App = React.createClass(
         </div>
       </div>
     </div>
-)
 
-PageTitle = React.createClass(
+PageTitle = React.createClass
   propTypes:
     title: React.PropTypes.string
     onTitleChange: React.PropTypes.func.isRequired
@@ -76,14 +81,12 @@ PageTitle = React.createClass(
         <h3 id="pagename" className="pageTitle border-dotted cursor-text" placeholder="no title" onClick={@toggleFocus}>
           {@state.title}
         </h3>
-    return (
-      <section id="pagetitle" className="pagetitle">
-        {pageTitleElem}
-      </section>
-    )
-)
 
-PageContent = React.createClass(
+    <section id="pagetitle" className="pagetitle">
+      {pageTitleElem}
+    </section>
+
+PageContent = React.createClass
   propTypes:
     content: React.PropTypes.string.isRequired
     onContentChange: React.PropTypes.func.isRequired
@@ -96,16 +99,12 @@ PageContent = React.createClass(
   changeContent: ->
     @props.onContentChange()
   render: ->
-    style = {
+    style =
       whiteSpace: 'pre'
       marginBottom: '20px'
-    }
-    return (
-      <div className="editable cursor-text" contentEditable="true" style={style} ref="editable" onInput={@changeContent}>{this.state.content}</div>
-    )
-)
+    <div className="editable cursor-text" contentEditable="true" style={style} ref="editable" onInput={@changeContent}>{this.state.content}</div>
 
-PageForm = React.createClass(
+PageForm = React.createClass
   propTypes:
     pageId: React.PropTypes.string
     onPageSubmit: React.PropTypes.func.isRequired
@@ -115,6 +114,5 @@ PageForm = React.createClass(
   render: ->
     pageId = @props.pageId or page.id
     <form id="contents" action={if pageId then "/pages/#{pageId}" else "/pages/"} method="PUT" onSubmit={@handleSubmit}></form>
-)
 
 module.exports = App
