@@ -75,10 +75,10 @@ PageTitle = React.createClass
         <h3 id="pagename" className="pageTitle border-dotted cursor-text" placeholder="no title" onClick={@toggleFocus}>
           {@state.title}
         </h3>
-    return
-      <section id="pagetitle" className="pagetitle">
-        {pageTitleElem}
-      </section>
+
+    <section id="pagetitle" className="pagetitle">
+      {pageTitleElem}
+    </section>
 
 PageContent = React.createClass
   propTypes:
@@ -96,8 +96,7 @@ PageContent = React.createClass
     style =
       whiteSpace: 'pre'
       marginBottom: '20px'
-    return
-      <div className="editable cursor-text" contentEditable="true" style={style} ref="editable" onInput={@changeContent}>{this.state.content}</div>
+    <div className="editable cursor-text" contentEditable="true" style={style} ref="editable" onInput={@changeContent}>{this.state.content}</div>
 
 PageForm = React.createClass
   propTypes:
