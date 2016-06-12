@@ -2,6 +2,7 @@ debug = require('debug')('page')
 inspect = require('object-inspect')
 request = require('superagent')
 React = require 'react'
+PageForm = require './pageform'
 
 App = React.createClass
   getInitialState: ->
@@ -49,7 +50,7 @@ App = React.createClass
       <div className="row">
         <div className="small-12 column">
           <PageContent ref="content" onContentChange={@handlePageSubmit} content=@state.content />
-          <PageForm onPageSubmit={@handlePageSubmit} pageId=@props.pageId />
+          <PageForm onPageSubmit={@handlePageSubmit} pageId={@props.pageId} />
         </div>
       </div>
     </div>
@@ -103,16 +104,5 @@ PageContent = React.createClass
       whiteSpace: 'pre'
       marginBottom: '20px'
     <div className="editable cursor-text" contentEditable="true" style={style} ref="editable" onInput={@changeContent}>{this.state.content}</div>
-
-PageForm = React.createClass
-  propTypes:
-    pageId: React.PropTypes.string
-    onPageSubmit: React.PropTypes.func.isRequired
-  handleSubmit: (e) ->
-    e.preventDefault()
-    @props.onPageSubmit()
-  render: ->
-    pageId = @props.pageId or page.id
-    <form id="contents" action={if pageId then "/pages/#{pageId}" else "/pages/"} method="PUT" onSubmit={@handleSubmit}></form>
 
 module.exports = App
