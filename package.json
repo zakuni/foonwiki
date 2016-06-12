@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "mocha",
-    "build": "browserify -t coffee-reactify --extension='.cjsx' --extension='.coffee' components/index.cjsx -o public/js/bundle.js",
-    "watch": "watchify -t coffee-reactify -d --extension='.cjsx' --extension='.coffee' components/index.cjsx -o public/js/bundle.js -v",
+    "build": "browserify -t coffee-reactify --extension='.cjsx' --extension='.coffee' -t [ babelify --presets [ es2015 react ] ] --extension='.jsx' components/index.cjsx -o public/js/bundle.js",
+    "watch": "watchify -t coffee-reactify -d --extension='.cjsx' --extension='.coffee' -t [ babelify --presets [ es2015 react ] ] --extension='.jsx' components/index.cjsx -o public/js/bundle.js -v",
     "postinstall": "npm run build"
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "superagent": "^2.0.0"
   },
   "devDependencies": {
+    "babelify": "^7.3.0",
     "espower-coffee": "^1.0.1",
     "mocha": "^2.2.4",
     "power-assert": "^1.4.1",
