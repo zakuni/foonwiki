@@ -7,4 +7,7 @@ block content
       ul
         each page in pages
           li
-            a(href="/?id=#{page.id}") #{page.get("name")}
+            if page.get("name")
+              a(href="/?id=#{page.id}") #{page.get("name")}
+            else
+              a(href="/?id=#{page.id}") (no title)
