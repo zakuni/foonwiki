@@ -4,6 +4,7 @@ module.exports = (app) ->
   Page = require('../models/page')(app)
 
   React = require 'react'
+  ReactDOMServer = require 'react-dom/server'
   require('coffee-react/register')
   PageApp = require('../components/page.cjsx')
 
@@ -15,7 +16,7 @@ module.exports = (app) ->
         .then (page) ->
           res.render('page', {
             page: page,
-            pageapp: React.renderToString(
+            pageapp: ReactDOMServer.renderToString(
               React.createElement(PageApp, {
                 title: page.get("name"), content: page.get("content"), pageId: page.id
               })
