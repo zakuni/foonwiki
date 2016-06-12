@@ -2,7 +2,7 @@ debug = require('debug')('page')
 inspect = require('object-inspect')
 request = require('superagent')
 React = require 'react'
-PageForm = require './pageform'
+PageForm = require './pageform.jsx'
 
 App = React.createClass
   getInitialState: ->
