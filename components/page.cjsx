@@ -3,6 +3,8 @@ inspect = require('object-inspect')
 request = require('superagent')
 React = require 'react'
 ReactDOM = require 'react-dom'
+PageTitle = require './pagetitle'
+PageContent = require './pagecontent'
 PageForm = require './pageform.jsx'
 
 App = React.createClass
@@ -55,55 +57,5 @@ App = React.createClass
         </div>
       </div>
     </div>
-
-PageTitle = React.createClass
-  propTypes:
-    title: React.PropTypes.string
-    onTitleChange: React.PropTypes.func.isRequired
-    onTitleSubmit: React.PropTypes.func.isRequired
-  getInitialState: ->
-    {
-      title: @props.title
-      focus: false
-    }
-  toggleFocus: (e) ->
-    @setState({focus: !@state.focus}, -> ReactDOM.findDOMNode(@refs.input).focus())
-  changeTitle: (e) ->
-    @setState({title: event.target.value}, -> @props.onTitleSubmit(@state.title))
-  handleSubmit: (e) ->
-    e.preventDefault()
-    @props.onTitleSubmit(@state.title)
-  render: ->
-    pageTitleElem =
-      if @state.focus
-        <form id="pagenameform" className="pagename" onSubmit={@handleSubmit}>
-          <input id="pagenameinput" className="border-dotted" type="text" placeholder="no title" value={@state.title} onChange={@changeTitle} onBlur={@toggleFocus} ref="input" />
-        </form>
-      else
-        <h3 id="pagename" className="pageTitle border-dotted cursor-text" placeholder="no title" onClick={@toggleFocus}>
-          {@state.title}
-        </h3>
-
-    <section id="pagetitle" className="pagetitle">
-      {pageTitleElem}
-    </section>
-
-PageContent = React.createClass
-  propTypes:
-    content: React.PropTypes.string.isRequired
-    onContentChange: React.PropTypes.func.isRequired
-  getInitialState: ->
-    {content: @props.content}
-  componentDidMount: ->
-    @focus()
-  focus: ->
-    ReactDOM.findDOMNode(@refs.editable).focus()
-  changeContent: ->
-    @props.onContentChange()
-  render: ->
-    style =
-      whiteSpace: 'pre'
-      marginBottom: '20px'
-    <div className="editable cursor-text" contentEditable="true" style={style} ref="editable" onInput={@changeContent}>{this.state.content}</div>
 
 module.exports = App
