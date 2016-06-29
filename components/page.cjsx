@@ -2,6 +2,7 @@ debug = require('debug')('page')
 inspect = require('object-inspect')
 request = require('superagent')
 React = require 'react'
+ReactDOM = require 'react-dom'
 PageForm = require './pageform.jsx'
 
 App = React.createClass
@@ -20,7 +21,7 @@ App = React.createClass
       .send({name: @state.title, content: @state.content})
       .end((err, res) -> debug('%s %s', err, res))
   handlePageSubmit: ->
-    ce = $("<pre />").html(React.findDOMNode(@refs.content).innerHTML)
+    ce = $("<pre />").html(ReactDOM.findDOMNode(@refs.content).innerHTML)
     if($.browser.webkit)
       ce.find("div").replaceWith(()-> return "\n" + this.innerHTML)
     if($.browser.msie)
@@ -66,7 +67,7 @@ PageTitle = React.createClass
       focus: false
     }
   toggleFocus: (e) ->
-    @setState({focus: !@state.focus}, -> React.findDOMNode(@refs.input).focus())
+    @setState({focus: !@state.focus}, -> ReactDOM.findDOMNode(@refs.input).focus())
   changeTitle: (e) ->
     @setState({title: event.target.value}, -> @props.onTitleSubmit(@state.title))
   handleSubmit: (e) ->
@@ -96,7 +97,7 @@ PageContent = React.createClass
   componentDidMount: ->
     @focus()
   focus: ->
-    React.findDOMNode(@refs.editable).focus()
+    ReactDOM.findDOMNode(@refs.editable).focus()
   changeContent: ->
     @props.onContentChange()
   render: ->
