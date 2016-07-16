@@ -10,7 +10,7 @@ bookshelf = require('bookshelf')(knex)
 app = express()
 app.set('bookshelf', bookshelf)
 
-Page = require('../models/page')(app)
+Page = require('../../models/page')(app)
 
 module.exports =
   'Page':
