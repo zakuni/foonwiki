@@ -38,7 +38,6 @@
     "babel-preset-power-assert": "^1.0.0",
     "babelify": "^7.3.0",
     "enzyme": "^2.4.1",
-    "espower-coffee": "^1.0.1",
     "mocha": "^2.2.4",
     "power-assert": "^1.4.1",
     "react-addons-test-utils": "^15.2.1",
