@@ -1,4 +1,4 @@
-box: node:4.2.6-slim
+box: node:4.4.7
 # Build definition
 build:
   # The steps that will be executed on build
