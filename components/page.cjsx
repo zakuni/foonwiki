@@ -39,7 +39,7 @@ App = React.createClass
     localStorage.setItem "recentPages", JSON.stringify(this)
     @setState({title: title})
   handleTitleSubmit: (title) ->
-    @setState({content: ce.text()}, ->
+    @setState({title: title}, ->
       clearTimeout(@timeout)
       @timeout = setTimeout(@submitPage, 500)
     )
