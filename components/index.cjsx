@@ -1,7 +1,8 @@
 React = require 'react'
+ReactDOM = require 'react-dom'
 PageApp = require './page'
 
-React.render(
+ReactDOM.render(
   <PageApp />,
   document.getElementById('pageapp')
 )
