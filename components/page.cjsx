@@ -22,8 +22,8 @@ App = React.createClass
       .put(path)
       .send({name: @state.title, content: @state.content})
       .end((err, res) -> debug('%s %s', err, res))
-  handlePageSubmit: ->
-    ce = $("<pre />").html(ReactDOM.findDOMNode(@refs.content).innerHTML)
+  handlePageSubmit: (html) ->
+    ce = $("<pre />").html(html)
     if($.browser.webkit)
       ce.find("div").replaceWith(()-> return "\n" + this.innerHTML)
     if($.browser.msie)

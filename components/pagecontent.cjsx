@@ -12,7 +12,9 @@ PageContent = React.createClass
   focus: ->
     ReactDOM.findDOMNode(@refs.editable).focus()
   changeContent: ->
-    @props.onContentChange()
+    @props.onContentChange(
+      this.refs.editable.innerHTML
+    );
   render: ->
     style =
       whiteSpace: 'pre'

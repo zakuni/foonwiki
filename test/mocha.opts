@@ -1,2 +1,3 @@
+--require jsdom-global/register
 --recursive
 --compilers cjsx:coffee-react/register,coffee:coffee-script/register,js:babel-register
