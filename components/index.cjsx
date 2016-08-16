@@ -3,7 +3,7 @@ ReactDOM = require 'react-dom'
 PageApp = require './page'
 
 ReactDOM.render(
-  <PageApp />,
+  <PageApp title={page.name}, content={page.content}, pageId={page.id} />,
   document.getElementById('pageapp')
 )
 

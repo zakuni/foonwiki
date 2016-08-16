@@ -11,7 +11,7 @@ var PageForm = React.createClass({
   },
   render: function() {
     var action = "";
-    if (this.props.pageId) {
+    if (this.props.pageId !== undefined) {
       action = `/pages/${this.props.pageId}`;
     } else {
       action = "/pages/";
