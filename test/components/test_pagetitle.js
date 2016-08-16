@@ -9,4 +9,9 @@ describe('<PageTitle>', () => {
     const wrapper = shallow(<PageTitle />);
     assert.equal(wrapper.find('section').length, 1);
   });
+
+  it('renders the title', () => {
+    const wrapper = shallow(<PageTitle title="title text" />);
+    assert.equal(wrapper.text(), "title text");
+  });
 });

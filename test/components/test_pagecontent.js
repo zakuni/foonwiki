@@ -12,6 +12,11 @@ describe('<PageContent>', () => {
     assert.equal(wrapper.text(), "");
   });
 
+  it('renders the content', () => {
+    const wrapper = shallow(<PageContent content="content text" />);
+    assert.equal(wrapper.text(), "content text");
+  });
+
   it('should call onContentChange callback on input', () => {
     const onContentChange = sinon.spy();
     const wrapper = shallow(<PageContent onContentChange={onContentChange} />);
