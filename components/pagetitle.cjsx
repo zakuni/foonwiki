@@ -5,23 +5,19 @@ PageTitle = React.createClass
   propTypes:
     title: React.PropTypes.string
     onTitleChange: React.PropTypes.func.isRequired
-    onTitleSubmit: React.PropTypes.func.isRequired
   getInitialState: ->
     {
       focus: false
     }
-  toggleFocus: (e) ->
+  toggleFocus: ->
     @setState({focus: !@state.focus}, -> ReactDOM.findDOMNode(@refs.input).focus())
-  changeTitle: (e) ->
-    @props.onTitleSubmit(@refs.input.value)
-  handleSubmit: (e) ->
-    e.preventDefault()
-    @props.onTitleSubmit(@refs.input.value)
+  handleChange: ->
+    @props.onTitleChange(@refs.input.value)
   render: ->
     pageTitleElem =
       if @state.focus
-        <form id="pagenameform" className="pagename" onSubmit={@handleSubmit}>
-          <input id="pagenameinput" className="border-dotted" type="text" placeholder="no title" value={@props.title} onChange={@changeTitle} onBlur={@toggleFocus} ref="input" />
+        <form id="pagenameform" className="pagename">
+          <input id="pagenameinput" className="border-dotted" type="text" placeholder="no title" value={@props.title} onChange={@handleChange} onBlur={@toggleFocus} ref="input" />
         </form>
       else
         <h3 id="pagename" className="pageTitle border-dotted cursor-text" placeholder="no title" onClick={@toggleFocus}>
