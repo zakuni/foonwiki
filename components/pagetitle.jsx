@@ -1,5 +1,4 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 
 var PageTitle = React.createClass({
   propTypes: {
@@ -12,16 +11,29 @@ var PageTitle = React.createClass({
     };
   },
   toggleFocus: function() {
-    this.setState({focus: !this.state.focus}, () => {if (this.state.focus) { ReactDOM.findDOMNode(this.refs.input).focus(); }})
+    this.setState({ focus: !this.state.focus}, () => {
+      if (this.state.focus) {
+        this.input.focus();
+      }
+    });
   },
   handleChange: function() {
-    this.props.onTitleChange(this.refs.input.value);
+    this.props.onTitleChange(this.input.value);
   },
   render: function() {
     var pageTitleElem =
       this.state.focus ?
         <form id="pagenameform" className="pagename">
-          <input id="pagenameinput" className="border-dotted" type="text" placeholder="no title" value={this.props.title} onChange={this.handleChange} onBlur={this.toggleFocus} ref="input" />
+          <input
+            id="pagenameinput"
+            className="border-dotted"
+            type="text"
+            placeholder="no title"
+            value={this.props.title}
+            onChange={this.handleChange}
+            onBlur={this.toggleFocus}
+            ref={node => this.input = node}
+          />
         </form>
       :
         <h3 id="pagename" className="pageTitle border-dotted cursor-text" placeholder="no title" onClick={this.toggleFocus}>
