@@ -10,7 +10,7 @@ PageTitle = React.createClass
       focus: false
     }
   toggleFocus: ->
-    @setState({focus: !@state.focus}, -> ReactDOM.findDOMNode(@refs.input).focus())
+    @setState({focus: !@state.focus}, -> ReactDOM.findDOMNode(@refs.input).focus() if @state.focus)
   handleChange: ->
     @props.onTitleChange(@refs.input.value)
   render: ->
