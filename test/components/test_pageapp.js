@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import assert from 'power-assert';
 
-import PageApp from '../../components/page';
+import PageApp from '../../components/pageapp.jsx';
 import PageTitle from '../../components/pagetitle.jsx';
 import PageContent from '../../components/pagecontent.jsx';
 

@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var PageApp = require('./page');
+var PageApp = require('./pageapp');
 
 ReactDOM.render(
   <PageApp title={page.name} content={page.content} pageId={page.id} />,
