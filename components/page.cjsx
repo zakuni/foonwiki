@@ -8,11 +8,9 @@ PageContent = require './pagecontent.jsx'
 
 App = React.createClass
   getInitialState: ->
-    title = @props.title
-    content = @props.content
     {
-      title: title
-      content: content
+      title: @props.title
+      content: @props.content
     }
   submitPage: ->
     path = if this.props.pageId? then "/pages/#{this.props.pageId}" else "/pages/"
@@ -22,7 +20,7 @@ App = React.createClass
       .put(path)
       .send({name: @state.title, content: @state.content})
       .end((err, res) -> debug('%s %s', err, res))
-  handlePageSubmit: (html) ->
+  handleContentChange: (html) ->
     ce = $("<pre />").html(html)
     if($.browser.webkit)
       ce.find("div").replaceWith(()-> return "\n" + this.innerHTML)
@@ -49,7 +47,7 @@ App = React.createClass
       </div>
       <div className="row">
         <div className="small-12 column">
-          <PageContent ref="content" onContentChange={@handlePageSubmit} content=@state.content />
+          <PageContent ref="content" onContentChange={@handleContentChange} content=@state.content />
         </div>
       </div>
     </div>
