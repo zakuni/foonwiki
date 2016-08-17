@@ -5,7 +5,6 @@ React = require 'react'
 ReactDOM = require 'react-dom'
 PageTitle = require './pagetitle'
 PageContent = require './pagecontent.jsx'
-PageForm = require './pageform.jsx'
 
 App = React.createClass
   getInitialState: ->
