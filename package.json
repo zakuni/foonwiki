@@ -8,8 +8,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "mocha",
-    "build": "browserify -t coffee-reactify --extension='.cjsx' --extension='.coffee' -t [ babelify --presets [ es2015 react ] ] --extension='.jsx' components/index.cjsx -o public/js/bundle.js",
-    "watch": "watchify -t coffee-reactify -d --extension='.cjsx' --extension='.coffee' -t [ babelify --presets [ es2015 react ] ] --extension='.jsx' components/index.cjsx -o public/js/bundle.js -v",
+    "build": "browserify -t coffee-reactify --extension='.cjsx' --extension='.coffee' -t [ babelify --presets [ es2015 react ] ] --extension='.jsx' components/index.jsx -o public/js/bundle.js",
+    "watch": "watchify -t coffee-reactify -d --extension='.cjsx' --extension='.coffee' -t [ babelify --presets [ es2015 react ] ] --extension='.jsx' components/index.jsx -o public/js/bundle.js -v",
     "postinstall": "npm run build"
   },
   "dependencies": {
