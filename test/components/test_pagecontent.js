@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 import assert from 'power-assert';
 
-import PageContent from '../../components/pagecontent.cjsx';
+import PageContent from '../../components/pagecontent.jsx';
 
 describe('<PageContent>', () => {
   it('should render one <div>', () => {
@@ -18,10 +18,11 @@ describe('<PageContent>', () => {
   });
 
   it('should call onContentChange callback on input', () => {
-    const onContentChange = sinon.spy();
+    const onContentChange = sinon.spy(text => {return text});
     const wrapper = mount(<PageContent content="content text" onContentChange={onContentChange} />);
     wrapper.find('div').simulate('input');
     assert.equal(onContentChange.calledOnce, true);
     assert.equal(onContentChange.args[0], "content text");
+    assert.equal(onContentChange.returnValues[0], "content text");
   });
 });

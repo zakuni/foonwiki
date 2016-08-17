@@ -1,7 +1,7 @@
 FoonWiki
 ====
 
-[![wercker status](https://app.wercker.com/status/b9ac79505e99ea8734e13514915184c3/s/master "wercker status")](https://app.wercker.com/project/bykey/b9ac79505e99ea8734e13514915184c3)
+An ambient wiki, like an atmosphere.
 
 Usage
 -----
