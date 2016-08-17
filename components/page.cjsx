@@ -9,8 +9,8 @@ PageForm = require './pageform.jsx'
 
 App = React.createClass
   getInitialState: ->
-    title = @props.title or page.name
-    content = @props.content or page.content
+    title = @props.title
+    content = @props.content
     {
       title: title
       content: content
