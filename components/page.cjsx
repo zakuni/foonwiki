@@ -36,9 +36,6 @@ App = React.createClass
       @timeout = setTimeout(@submitPage, 500)
     )
   handleTitleChange: (title) ->
-    localStorage.setItem "recentPages", JSON.stringify(this)
-    @setState({title: title})
-  handleTitleSubmit: (title) ->
     @setState({title: title}, ->
       clearTimeout(@timeout)
       @timeout = setTimeout(@submitPage, 500)
@@ -47,7 +44,7 @@ App = React.createClass
     <div>
       <div className="row">
         <div className="small-12 column">
-          <PageTitle onTitleChange={@handleTitleChange} onTitleSubmit={@handleTitleSubmit} title=@state.title />
+          <PageTitle onTitleChange={@handleTitleChange} title=@state.title />
         </div>
       </div>
       <div className="row">
