@@ -6,9 +6,6 @@ var PageContent = React.createClass({
     onContentChange: React.PropTypes.func.isRequired
   },
   componentDidMount: function() {
-    this.focus();
-  },
-  focus: function() {
     this.editable.focus();
   },
   render: function() {
