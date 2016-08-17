@@ -12,18 +12,21 @@ var PageContent = React.createClass({
   focus: function() {
     ReactDOM.findDOMNode(this.refs.editable).focus();
   },
-  changeContent: function() {
-    this.props.onContentChange(
-      this.refs.editable.innerHTML
-    );
-  },
   render: function() {
     var style = {
       whiteSpace: 'pre',
       marginBottom: '20px'
     };
     return (
-      <div className="editable cursor-text" contentEditable="true" style={style} ref="editable" onInput={this.changeContent}>{this.props.content}</div>
+      <div
+        className="editable cursor-text"
+        contentEditable="true"
+        style={style}
+        ref="editable"
+        onInput={() => this.props.onContentChange(this.refs.editable.innerHTML)}
+      >
+        {this.props.content}
+      </div>
     );
   }
 });
