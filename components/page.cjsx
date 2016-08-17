@@ -16,7 +16,8 @@ App = React.createClass
       content: content
     }
   submitPage: ->
-    path = $("#contents").attr("action")
+    path = if this.props.pageId? then "/pages/#{this.props.pageId}" else "/pages/"
+
     debug('submit to %s %s', path, inspect(@state, {colors: true}))
     request
       .put(path)
@@ -50,7 +51,6 @@ App = React.createClass
       <div className="row">
         <div className="small-12 column">
           <PageContent ref="content" onContentChange={@handlePageSubmit} content=@state.content />
-          <PageForm onPageSubmit={@handlePageSubmit} pageId={@props.pageId} />
         </div>
       </div>
     </div>
