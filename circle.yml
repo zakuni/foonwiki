@@ -1,3 +1,9 @@
 machine:
   node:
     version: 4.2.6
+
+deployment:
+  production:
+    branch: release
+    heroku:
+      appname: foonwiki
