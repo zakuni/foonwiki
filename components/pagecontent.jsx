@@ -31,4 +31,4 @@ var PageContent = React.createClass({
   }
 });
 
-module.exports = PageContent
+module.exports = PageContent;
