@@ -1,5 +1,4 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 
 var PageContent = React.createClass({
   propTypes: {
@@ -10,7 +9,7 @@ var PageContent = React.createClass({
     this.focus();
   },
   focus: function() {
-    ReactDOM.findDOMNode(this.refs.editable).focus();
+    this.editable.focus();
   },
   render: function() {
     var style = {
@@ -22,8 +21,8 @@ var PageContent = React.createClass({
         className="editable cursor-text"
         contentEditable="true"
         style={style}
-        ref="editable"
-        onInput={() => this.props.onContentChange(this.refs.editable.innerHTML)}
+        ref={node => this.editable = node}
+        onInput={() => this.props.onContentChange(this.editable.innerHTML)}
       >
         {this.props.content}
       </div>
