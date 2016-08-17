@@ -2,7 +2,6 @@ var debug = require('debug')('page');
 var inspect = require('object-inspect');
 var request = require('superagent');
 var React = require('react');
-var ReactDOM = require('react-dom');
 var PageTitle = require('./pagetitle.jsx');
 var PageContent = require('./pagecontent.jsx');
 
