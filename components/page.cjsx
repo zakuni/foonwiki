@@ -4,7 +4,7 @@ request = require('superagent')
 React = require 'react'
 ReactDOM = require 'react-dom'
 PageTitle = require './pagetitle'
-PageContent = require './pagecontent'
+PageContent = require './pagecontent.jsx'
 PageForm = require './pageform.jsx'
 
 App = React.createClass
