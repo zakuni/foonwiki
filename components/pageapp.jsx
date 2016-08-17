@@ -5,7 +5,7 @@ import React from 'react';
 import PageTitle from './pagetitle.jsx';
 import PageContent from './pagecontent.jsx';
 
-var App = React.createClass({
+var PageApp = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
     content: React.PropTypes.string,
@@ -64,4 +64,4 @@ var App = React.createClass({
   }
 });
 
-module.exports = App
+module.exports = PageApp
