@@ -17,9 +17,6 @@ var PageTitle = React.createClass({
       }
     });
   },
-  handleChange: function() {
-    this.props.onTitleChange(this.input.value);
-  },
   render: function() {
     var pageTitleElem =
       this.state.focus ?
@@ -30,7 +27,7 @@ var PageTitle = React.createClass({
             type="text"
             placeholder="no title"
             value={this.props.title}
-            onChange={this.handleChange}
+            onChange={() => this.props.onTitleChange(this.input.value)}
             onBlur={this.toggleFocus}
             ref={node => this.input = node}
           />
