@@ -5,8 +5,8 @@ module.exports = (app) ->
 
   React = require 'react'
   ReactDOMServer = require 'react-dom/server'
-  require('coffee-react/register')
-  PageApp = require('../components/page.cjsx')
+  
+  PageApp = require('../components/pageapp.jsx')
 
   router.get('/', (req, res) ->
     id = req.query.id
