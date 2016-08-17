@@ -1,11 +1,16 @@
 var debug = require('debug')('page');
 var inspect = require('object-inspect');
 var request = require('superagent');
-var React = require('react');
-var PageTitle = require('./pagetitle.jsx');
-var PageContent = require('./pagecontent.jsx');
+import React from 'react';
+import PageTitle from './pagetitle.jsx';
+import PageContent from './pagecontent.jsx';
 
 var App = React.createClass({
+  propTypes: {
+    title: React.PropTypes.string,
+    content: React.PropTypes.string,
+    pageId: React.PropTypes.string
+  },
   getInitialState: function() {
     return {
       title: this.props.title,
