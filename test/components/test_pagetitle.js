@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 import assert from 'power-assert';
 
-import PageTitle from '../../components/pagetitle.cjsx';
+import PageTitle from '../../components/pagetitle.jsx';
 
 describe('<PageTitle>', () => {
   it('should render one <section>', () => {

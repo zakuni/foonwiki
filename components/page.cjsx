@@ -3,7 +3,7 @@ inspect = require('object-inspect')
 request = require('superagent')
 React = require 'react'
 ReactDOM = require 'react-dom'
-PageTitle = require './pagetitle'
+PageTitle = require './pagetitle.jsx'
 PageContent = require './pagecontent.jsx'
 
 App = React.createClass
