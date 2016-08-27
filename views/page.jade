@@ -3,3 +3,5 @@ extends layout
 block content
   #pageapp
     != pageapp
+  script(type='text/javascript').
+    var page =!{JSON.stringify(page)}
