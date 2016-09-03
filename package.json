@@ -8,8 +8,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "mocha",
-    "build": "browserify -t [ babelify --presets [ es2015 react ] ] --extension='.jsx' components/index.jsx -o public/js/bundle.js",
-    "watch": "watchify -t [ babelify --presets [ es2015 react ] ] --extension='.jsx' components/index.jsx -o public/js/bundle.js -v",
+    "build": "webpack",
     "postinstall": "npm run build"
   },
   "dependencies": {
@@ -17,11 +16,9 @@
     "babel-preset-power-assert": "^1.0.0",
     "babel-preset-react": "^6.5.0",
     "babel-register": "^6.9.0",
-    "babelify": "^7.3.0",
     "bluebird": "^3.4.0",
     "body-parser": "~1.15.1",
     "bookshelf": "^0.9.5",
-    "browserify": "^13.0.1",
     "coffee-script": "^1.9.2",
     "cookie-parser": "~1.4.3",
     "debug": "^2.1.3",
@@ -47,7 +44,6 @@
     "mocha": "^2.2.4",
     "power-assert": "^1.4.1",
     "react-addons-test-utils": "^15.2.1",
-    "sinon": "^1.17.4",
-    "watchify": "^3.2.1"
+    "sinon": "^1.17.4"
   }
 }
