@@ -35,7 +35,8 @@
     "react": "^15.3.0",
     "react-dom": "^15.1.0",
     "serve-favicon": "~2.3.0",
-    "superagent": "^2.0.0"
+    "superagent": "^2.0.0",
+    "webpack": "^1.13.2"
   },
   "devDependencies": {
     "enzyme": "^2.4.1",
