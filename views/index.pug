@@ -2,40 +2,40 @@ extends layout
 
 block content
   section#hero
-    div.row
-      div.small-12.column
+    .row
+      .small-12.column
         h1 FoonWiki
         h3.subheader An ambient wiki, like an atmosphere.
         br
-    div.row
-      div.small-12.large-4.columns.end
-        a(href="/pages/new" class="button radius")
-          i(class="fa fa-arrow-right fa-fw")
+    .row
+      .small-12.large-4.columns.end
+        a.button.radius(href="/pages/new")
+          i.fa.fa-arrow-right.fa-fw
           |  Create New Page
   section#wikilinks
-    div.row.centered-text
-      div.small-12.large-4.columns
+    .row.centered-text
+      .small-12.large-4.columns
         section#seen
           h4 Pages You have Seen
           ul.undotted
-      div.small-12.large-4.columns
+      .small-12.large-4.columns
         section#updated
           h4 Recently Updated Pages
           ul.undotted
             each page in updatedPages
               li
-                a(href="/?id=#{page.id}") !{page.escape("name")}
+                a(href=`/?id=${page.id}`) !{page.escape("name")}
             br
             li(style="text-align:right")
               a(href="/pages?sortedby=updated") view all&nbsp;
                 i.fa.fa-chevron-circle-right
-      div.small-12.large-4.columns
+      .small-12.large-4.columns
         section#created
           h4 Newly Created Pages
           ul.undotted
             each page in newPages
               li
-                a(href="/?id=#{page.id}") !{page.escape("name")}
+                a(href=`/?id=${page.id}`) !{page.escape("name")}
             br
             li(style="text-align:right")
               a(href="/pages?sortedby=created") view all&nbsp;
