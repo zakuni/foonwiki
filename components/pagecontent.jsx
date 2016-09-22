@@ -1,14 +1,7 @@
 import React from 'react';
 
-var PageContent = React.createClass({
-  propTypes: {
-    content: React.PropTypes.string.isRequired,
-    onContentChange: React.PropTypes.func.isRequired
-  },
-  componentDidMount: function() {
-    this.editable.focus();
-  },
-  render: function() {
+class PageContent extends Component {
+  render() {
     var style = {
       whiteSpace: 'pre',
       marginBottom: '20px'
@@ -25,6 +18,10 @@ var PageContent = React.createClass({
       </div>
     );
   }
-});
+}
+PageContent.propTypes = {
+  content: React.PropTypes.string.isRequired,
+  onContentChange: React.PropTypes.func.isRequired
+};
 
-module.exports = PageContent;
+export default PageContent;
