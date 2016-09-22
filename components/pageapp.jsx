@@ -2,8 +2,8 @@ var debug = require('debug')('page');
 var inspect = require('object-inspect');
 var request = require('superagent');
 import React from 'react';
-import PageTitle from './pagetitle.jsx';
-import PageContent from './pagecontent.jsx';
+import PageTitle from './pagetitle';
+import PageContent from './pagecontent';
 
 var PageApp = React.createClass({
   propTypes: {
