@@ -7,7 +7,7 @@ class PageContentRow extends Component {
           className="editable cursor-text"
           contentEditable="true"
           ref={node => this.editable = node}
-          onInput={() => this.props.onContentChange(this.editable.innerHTML)}
+          onInput={() => this.props.onChange(this.editable.innerHTML)}
       >
           {this.props.text}
       </div>
@@ -16,7 +16,11 @@ class PageContentRow extends Component {
 }
 PageContentRow.propTypes = {
   text: PropTypes.string.isRequired,
-  onContentChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired
+};
+PageContentRow.defaultProps = {
+  text: "",
+  onChange: () => {}
 };
 
 export default PageContentRow;
