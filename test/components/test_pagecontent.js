@@ -18,8 +18,9 @@ describe('<PageContent>', () => {
   });
 
   it('should call onContentChange callback on input', () => {
+    const content = "content text";
     const onContentChange = sinon.spy(text => {return text});
-    const wrapper = mount(<PageContent content="content text" onContentChange={onContentChange} />);
+    const wrapper = mount(<PageContent content={content} onContentChange={onContentChange} />);
     wrapper.find('div').simulate('input');
     assert.equal(onContentChange.calledOnce, true);
     assert.equal(onContentChange.args[0], "content text");
