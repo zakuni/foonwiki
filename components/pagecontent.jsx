@@ -23,5 +23,9 @@ PageContent.propTypes = {
   content: React.PropTypes.string.isRequired,
   onContentChange: React.PropTypes.func.isRequired
 };
+PageContent.defaultProps = {
+  content: "",
+  onContentChange: () => {}
+};
 
 export default PageContent;
