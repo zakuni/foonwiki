@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
 class PageContentRow extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <div
@@ -15,8 +18,9 @@ class PageContentRow extends Component {
   }
 }
 PageContentRow.propTypes = {
+  lineNumber: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 PageContentRow.defaultProps = {
   text: "",
