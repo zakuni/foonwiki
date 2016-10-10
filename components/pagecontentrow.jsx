@@ -24,6 +24,10 @@ class PageContentRow extends Component {
         this.props.onBackSpaceKeyDown(this.props.lineNumber);
         event.preventDefault();
       }
+    } else if(keyCode === 38 || (event.ctrlKey && keyCode === 80)) {
+      this.props.onUpkeyDown(this.props.lineNumber);
+    } else if(keyCode === 40 || (event.ctrlKey && keyCode === 78)) {
+      this.props.onDownKeyDown(this.props.lineNumber);
     }
   }
   render() {

@@ -7,6 +7,8 @@ class PageContent extends Component {
     this.mergeContent = this.mergeContent.bind(this);
     this.insertNewLine = this.insertNewLine.bind(this);
     this.backSpace = this.backSpace.bind(this);
+    this.moveUp = this.moveUp.bind(this);
+    this.moveDown = this.moveDown.bind(this);
   }
   mergeContent(lineNumber, text) {
     let content = "";
@@ -45,6 +47,12 @@ class PageContent extends Component {
   focusTo(lineNumber) {
     this.refs[lineNumber].toggleFocus();
   }
+  moveUp(lineNumber) {
+    this.focusTo(lineNumber-1);
+  }
+  moveDown(lineNumber) {
+    this.focusTo(lineNumber+1);
+  }
   render() {
     const rows = [];
     this.props.content.split(/\r\n|\r|\n/).forEach((line, index) => {
@@ -55,6 +63,8 @@ class PageContent extends Component {
                   onChange={this.mergeContent}
                   onEnterKeyDown={this.insertNewLine}
                   onBackSpaceKeyDown={this.backSpace}
+                  onUpkeyDown={this.moveUp}
+                  onDownKeyDown={this.moveDown}  
                   key={index}
                   ref={lineNumber}
                 />);
