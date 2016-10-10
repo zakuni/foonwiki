@@ -1,13 +1,13 @@
 extends layout
 
 block content
-  div.row
-    div.small-12.column
+  .row
+    .small-12.column
       h1 All Pages
       ul
         each page in pages
           li
             if page.get("name")
-              a(href="/?id=#{page.id}") #{page.get("name")}
+              a(href=`/?id=${page.id}`) #{page.get("name")}
             else
-              a(href="/?id=#{page.id}") (no title)
+              a(href=`/?id=${page.id}`) (no title)

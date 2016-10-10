@@ -2,8 +2,8 @@ var debug = require('debug')('page');
 var inspect = require('object-inspect');
 var request = require('superagent');
 import React from 'react';
-import PageTitle from './pagetitle.jsx';
-import PageContent from './pagecontent.jsx';
+import PageTitle from './pagetitle';
+import PageContent from './pagecontent';
 
 var PageApp = React.createClass({
   propTypes: {
@@ -26,16 +26,8 @@ var PageApp = React.createClass({
       .send({name: this.state.title, content: this.state.content})
       .end((err, res) => { debug('%s %s', err, res) });
   },
-  handleContentChange: function (html) {
-    var ce = $("<pre />").html(html);
-    if($.browser.webkit !== undefined)
-      ce.find("div").replaceWith(function() { return "\n" + this.innerHTML})
-    if($.browser.msie !== undefined)
-      ce.find("p").replaceWith(function() { return this.innerHTML + "<br>" });
-    if($.browser.mozilla || $.browser.opera || $.browser.msie)
-      ce.find("br").replaceWith("\n")
-
-    this.setState({content: ce.text()}, function() {
+  handleContentChange: function (text) {
+    this.setState({content: text}, function() {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(this.submitPage, 500);
     });
