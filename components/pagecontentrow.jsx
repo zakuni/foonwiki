@@ -20,8 +20,10 @@ class PageContentRow extends Component {
       this.props.onEnterKeyDown(this.props.lineNumber);
       event.preventDefault();
     } else if(keyCode === 8) {
-      this.props.onBackSpaceKeyDown(this.props.lineNumber);
-      event.preventDefault();
+      if (this.input.selectionStart === 0) {
+        this.props.onBackSpaceKeyDown(this.props.lineNumber);
+        event.preventDefault();
+      }
     }
   }
   render() {
