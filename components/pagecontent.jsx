@@ -9,7 +9,6 @@ class PageContent extends Component {
     this.backSpace = this.backSpace.bind(this);
   }
   mergeContent(lineNumber, text) {
-    console.log(text);
     let content = "";
     Array.from(this.refs.contents.childNodes).forEach((node, index) => {
       content += index+1 === lineNumber ? `${text}\n` : `${node.textContent}\n`;
