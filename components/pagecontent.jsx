@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PageContentRow from './pagecontentrow';
-import ReactDOM from 'react-dom';
 
 class PageContent extends Component {
   constructor(props) {
@@ -9,10 +8,11 @@ class PageContent extends Component {
     this.insertNewLine = this.insertNewLine.bind(this);
     this.backSpace = this.backSpace.bind(this);
   }
-  mergeContent() {
+  mergeContent(lineNumber, text) {
+    console.log(text);
     let content = "";
-    Array.from(this.refs.contents.childNodes).forEach((node) => {
-      content += `${node.textContent}\n`;
+    Array.from(this.refs.contents.childNodes).forEach((node, index) => {
+      content += index+1 === lineNumber ? `${text}\n` : `${node.textContent}\n`;
     });
     // remove last extra newline
     content = content.substr(0, content.length-1);
@@ -44,7 +44,7 @@ class PageContent extends Component {
     this.focusTo(lineNumber-1);
   }
   focusTo(lineNumber) {
-    ReactDOM.findDOMNode(this.refs[lineNumber]).focus();
+    this.refs[lineNumber].toggleFocus();
   }
   render() {
     const rows = [];

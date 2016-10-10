@@ -3,7 +3,16 @@ import React, { Component, PropTypes } from 'react';
 class PageContentRow extends Component {
   constructor(props) {
     super(props);
+    this.toggleFocus = this.toggleFocus.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.state = {focus: false};
+  }
+  toggleFocus() {
+    this.setState({ focus: !this.state.focus }, () => {
+      if (this.state.focus) {
+        this.input.focus();
+      }
+    });
   }
   handleKeyDown(event) {
     const keyCode = event.keyCode;
@@ -16,17 +25,25 @@ class PageContentRow extends Component {
     }
   }
   render() {
-    return (
-      <div
-          className="editable cursor-text"
-          contentEditable="true"
-          ref={node => this.editable = node}
-          onInput={() => this.props.onChange(this.editable.innerHTML)}
+    let rowElem =
+      this.state.focus ?
+      <input
+          type="text"
+          ref={node => this.input = node}
+          value={this.props.text}
+          onChange={() => this.props.onChange(this.props.lineNumber, this.input.value)}
+          onBlur={this.toggleFocus}
           onKeyDown={this.handleKeyDown}
+      />
+      :
+      <div
+          className="cursor-text"
+          onClick={this.toggleFocus}
       >
           {this.props.text}
       </div>
-    );
+
+    return rowElem;
   }
 }
 PageContentRow.propTypes = {
