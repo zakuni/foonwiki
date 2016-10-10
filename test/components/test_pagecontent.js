@@ -23,7 +23,8 @@ describe('<PageContent>', () => {
     const content = "content text\nsecond row";
     const onContentChange = sinon.spy(text => {return text});
     const wrapper = mount(<PageContent content={content} onContentChange={onContentChange} />);
-    wrapper.find('div').first().simulate('input');
+    wrapper.find('div').first().simulate('click');
+    wrapper.find('input').simulate('change');
     assert.equal(onContentChange.calledOnce, true);
     assert.equal(onContentChange.args[0], "content text\nsecond row");
     assert.equal(onContentChange.returnValues[0], "content text\nsecond row");

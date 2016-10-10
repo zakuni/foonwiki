@@ -31,11 +31,14 @@ describe('<PageContentRow>', () => {
 
   it('should call onChange callback on input', () => {
     const contentRow = "row";
-    const handleChange = sinon.spy(value => {return value});
-    const wrapper = mount(<PageContentRow text={contentRow} onChange={handleChange} />);
-    wrapper.find('div').simulate('input');
+    const handleChange = sinon.spy((arg0, arg1) => {return [arg0, arg1]});
+    const wrapper = mount(<PageContentRow lineNumber={1} text={contentRow} onChange={handleChange} />);
+    wrapper.find('div').simulate('click');
+    wrapper.find('input').simulate('change');
     assert.equal(handleChange.calledOnce, true);
-    assert.equal(handleChange.args[0], "row");
-    assert.equal(handleChange.returnValues[0], "row");
+    assert.equal(handleChange.args[0][0], 1);
+    assert.equal(handleChange.args[0][1], "row");
+    assert.equal(handleChange.returnValues[0][0], 1);
+    assert.equal(handleChange.returnValues[0][1], "row");
   });
 });
