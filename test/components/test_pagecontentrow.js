@@ -7,12 +7,12 @@ import PageContentRow from '../../components/pagecontentrow.jsx';
 
 describe('<PageContentRow>', () => {
   it('should render one <div>', () => {
-    const wrapper = shallow(<PageContentRow />);
+    const wrapper = mount(<PageContentRow />);
     assert.equal(wrapper.find('div').length, 1);
   });
 
   it('renders the text', () => {
-    const wrapper = shallow(<PageContentRow text="row text" />);
+    const wrapper = mount(<PageContentRow text="row text" />);
     assert.equal(wrapper.text(), "row text");
   });
 
