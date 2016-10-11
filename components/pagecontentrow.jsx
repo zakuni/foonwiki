@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Linkify from 'linkifyjs/react';
 
 class PageContentRow extends Component {
   constructor(props) {
@@ -42,12 +43,13 @@ class PageContentRow extends Component {
           onKeyDown={this.handleKeyDown}
       />
       :
-      <div
+      <Linkify
+          tagName="div"
           className="cursor-text"
           onClick={this.toggleFocus}
       >
           {this.props.text}
-      </div>
+      </Linkify>
 
     return rowElem;
   }
