@@ -45,7 +45,7 @@ class PageContentRow extends Component {
       :
       <Linkify
           tagName="div"
-          className="cursor-text"
+          className={["cursor-text", "content-row"].join(' ')}
           onClick={this.toggleFocus}
       >
           {this.props.text}
