@@ -28,6 +28,10 @@
   cursor: text;
 }
 
+.content-row {
+  height: 30px;
+}
+
 [placeholder]:empty:before {
     content: attr(placeholder);
     color: #eee;
