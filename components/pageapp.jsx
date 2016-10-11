@@ -14,7 +14,7 @@ var PageApp = React.createClass({
   getInitialState: function() {
     return {
       title: this.props.title,
-      content: this.props.content
+      content: this.props.content === null ? "" : this.props.content
     }
   },
   submitPage: function() {

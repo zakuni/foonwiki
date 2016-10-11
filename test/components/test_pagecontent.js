@@ -19,6 +19,11 @@ describe('<PageContent>', () => {
     assert.equal(wrapper.text(), "<PageContentRow /><PageContentRow />");
   });
 
+  it('renders empty row when no content', () => {
+    const wrapper = shallow(<PageContent content="" />);
+    assert.equal(wrapper.text(), "<PageContentRow />");
+  });
+
   it('should call onContentChange callback on input', () => {
     const content = "content text\nsecond row";
     const onContentChange = sinon.spy(text => {return text});
