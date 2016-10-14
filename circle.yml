@@ -2,6 +2,10 @@ machine:
   node:
     version: 4.2.6
 
+database:
+  override:
+    - createdb foonwiki
+
 deployment:
   production:
     branch: release
