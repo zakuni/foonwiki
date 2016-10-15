@@ -7,7 +7,7 @@ module.exports = function(app) {
   ReactDOMServer = require('react-dom/server');
   PageApp = require('../components/pageapp.jsx');
   
-  return router.get('/', function(req, res) {
+  router.get('/', function(req, res) {
     var id, newPages, updatedPages;
     id = req.query.id;
     if (id != null) {
@@ -49,4 +49,6 @@ module.exports = function(app) {
       });
     }
   });
+
+  return router;
 };
