@@ -8,8 +8,7 @@ module.exports = function(app) {
   PageApp = require('../components/pageapp.jsx');
   
   router.get('/', function(req, res) {
-    var id, newPages, updatedPages;
-    id = req.query.id;
+    const id = req.query.id;
     if (id != null) {
       new Page({'id': id})
         .fetch()
@@ -28,8 +27,8 @@ module.exports = function(app) {
           }
         });
     } else {
-      updatedPages = [];
-      newPages = [];
+      let updatedPages = [];
+      let newPages = [];
       Promise.all([
         Page.query((qb) => { qb.orderBy('updated_at', 'desc').limit(5); })
             .fetchAll()
