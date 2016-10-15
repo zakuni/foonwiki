@@ -14,14 +14,17 @@ module.exports = (app) ->
       new Page({'id': id})
         .fetch()
         .then (page) ->
-          res.render('page', {
-            page: page,
-            pageapp: ReactDOMServer.renderToString(
-              React.createElement(PageApp, {
-                title: page.get("name"), content: page.get("content"), pageId: page.id
-              })
-            )
-          })
+          if page?
+            res.render('page', {
+              page: page,
+              pageapp: ReactDOMServer.renderToString(
+                React.createElement(PageApp, {
+                  title: page.get("name"), content: page.get("content"), pageId: page.id
+                })
+              )
+            })
+          else
+            res.redirect('/page/new')
     else
       updatedPages = []
       newPages = []

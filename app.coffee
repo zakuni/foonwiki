@@ -7,7 +7,7 @@ bodyParser = require 'body-parser'
 
 knex = require('knex')(
   client: 'pg'
-  connection: process.env.DATABASE_URL
+  connection: process.env.DATABASE_URL || 'postgres://localhost:5432/foonwiki?sslmode=disable'
 )
 bookshelf = require('bookshelf')(knex)
 
