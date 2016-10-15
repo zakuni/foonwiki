@@ -30,24 +30,17 @@ module.exports = function(app) {
     } else {
       updatedPages = [];
       newPages = [];
-      return Promise.all([
-        Page.query((function(_this) {
-          return (qb) => {
-            qb.orderBy('updated_at', 'desc').limit(5);
-          };
-        })(this)).fetchAll().then((function(_this) {
-          return (pages) => {
-            updatedPages = pages;
-          };
-        })(this)), Page.query((function(_this) {
-          return (qb) => {
-            return qb.orderBy('created_at', 'desc').limit(5);
-          };
-        })(this)).fetchAll().then((function(_this) {
-          return (pages) => {
-            newPages = pages;
-          };
-        })(this))
+      Promise.all([
+        Page.query((qb) => { qb.orderBy('updated_at', 'desc').limit(5); })
+            .fetchAll()
+            .then((pages) => {
+              updatedPages = pages;
+            }),
+        Page.query((qb) => { qb.orderBy('created_at', 'desc').limit(5); })
+            .fetchAll()
+            .then((pages) => {
+                newPages = pages;
+            })
       ]).then((function(_this) {
         return function() {
           return res.render('index', {
