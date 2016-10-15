@@ -6,6 +6,7 @@ database:
   override:
     - createdb foonwiki
     - knex migrate:latest
+    - knex seed:run
 
 deployment:
   production:
