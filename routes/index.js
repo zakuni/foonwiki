@@ -11,22 +11,22 @@ module.exports = function(app) {
     var id, newPages, updatedPages;
     id = req.query.id;
     if (id != null) {
-      return new Page({
-        'id': id
-      }).fetch().then(function(page) {
-        if (page != null) {
-          res.render('page', {
-            page: page,
-            pageapp: ReactDOMServer.renderToString(React.createElement(PageApp, {
-              title: page.get("name"),
-              content: page.get("content"),
-              pageId: page.id
-            }))
-          });
-        } else {
-          res.redirect('/page/new');
-        }
-      });
+      new Page({'id': id})
+        .fetch()
+        .then((page) => {
+          if (page != null) {
+            res.render('page', {
+              page: page,
+              pageapp: ReactDOMServer.renderToString(React.createElement(PageApp, {
+                title: page.get("name"),
+                content: page.get("content"),
+                pageId: page.id
+              }))
+            });
+          } else {
+            res.redirect('/page/new');
+          }
+        });
     } else {
       updatedPages = [];
       newPages = [];
@@ -41,14 +41,12 @@ module.exports = function(app) {
             .then((pages) => {
                 newPages = pages;
             })
-      ]).then((function(_this) {
-        return function() {
-          return res.render('index', {
-            updatedPages: updatedPages.models,
-            newPages: newPages.models
-          });
-        };
-      })(this));
+      ]).then(() => {
+        res.render('index', {
+          updatedPages: updatedPages.models,
+          newPages: newPages.models
+        });
+      });
     }
   });
 };
