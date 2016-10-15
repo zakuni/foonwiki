@@ -21,10 +21,11 @@ describe('GET /', () => {
     });
 
     context('with not existing id', () => {
-      it('redirects', (done) => {
+      it('redirects to /page/new', (done) => {
         request(app)
           .get('/')
           .query('id=-1')
+          .expect('Location', '/page/new')
           .expect(302, done);
       });
     });
