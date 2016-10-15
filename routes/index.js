@@ -6,6 +6,7 @@ module.exports = function(app) {
   React = require('react');
   ReactDOMServer = require('react-dom/server');
   PageApp = require('../components/pageapp.jsx');
+  
   return router.get('/', function(req, res) {
     var id, newPages, updatedPages;
     id = req.query.id;
@@ -14,7 +15,7 @@ module.exports = function(app) {
         'id': id
       }).fetch().then(function(page) {
         if (page != null) {
-          return res.render('page', {
+          res.render('page', {
             page: page,
             pageapp: ReactDOMServer.renderToString(React.createElement(PageApp, {
               title: page.get("name"),
@@ -23,7 +24,7 @@ module.exports = function(app) {
             }))
           });
         } else {
-          return res.redirect('/page/new');
+          res.redirect('/page/new');
         }
       });
     } else {
@@ -31,19 +32,19 @@ module.exports = function(app) {
       newPages = [];
       return Promise.all([
         Page.query((function(_this) {
-          return function(qb) {
-            return qb.orderBy('updated_at', 'desc').limit(5);
+          return (qb) => {
+            qb.orderBy('updated_at', 'desc').limit(5);
           };
         })(this)).fetchAll().then((function(_this) {
-          return function(pages) {
+          return (pages) => {
             updatedPages = pages;
           };
         })(this)), Page.query((function(_this) {
-          return function(qb) {
+          return (qb) => {
             return qb.orderBy('created_at', 'desc').limit(5);
           };
         })(this)).fetchAll().then((function(_this) {
-          return function(pages) {
+          return (pages) => {
             newPages = pages;
           };
         })(this))
