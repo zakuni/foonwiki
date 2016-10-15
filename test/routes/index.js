@@ -19,6 +19,15 @@ describe('GET /', () => {
           .expect(200, done);
       });
     });
+
+    context('with not existing id', () => {
+      it('redirects', (done) => {
+        request(app)
+          .get('/')
+          .query('id=-1')
+          .expect(302, done);
+      });
+    });
   });
 
   context('with invalid query', () => {
